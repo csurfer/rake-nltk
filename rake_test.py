@@ -9,6 +9,11 @@ import unittest
 from rake import Rake
 from collections import defaultdict
 
+# To ensure tokenization runs without a hitch in TravisCL.#
+import nltk
+nltk.download('punkt')
+nltk.download('stopwords')
+###########################################################
 
 class RakeUnitTest(unittest.TestCase):
 
