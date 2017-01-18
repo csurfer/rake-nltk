@@ -9,5 +9,5 @@ This is a python implementation of the algorithm as mentioned in paper [Automati
 
 ## Why I chose to implement it myself?
 - It is extremely fun to implement algorithms by reading papers. It is the digital equivalent of DIY kits.
-- There are some rather popular implementations out there in python([aneesha/RAKE](https://github.com/aneesha/RAKE)) and node([waseem18/node-rake](https://github.com/waseem18/node-rake)) but neither seemed to use the power of [NLTK](http://www.nltk.org/). By making NLTK an integral part of the implementation I get the flexibility and power to extend it in other creative ways, if I see fit later, without having to implement everything myself.
+- There are some rather popular implementations out there, in python([aneesha/RAKE](https://github.com/aneesha/RAKE)) and node([waseem18/node-rake](https://github.com/waseem18/node-rake)) but neither seemed to use the power of [NLTK](http://www.nltk.org/). By making NLTK an integral part of the implementation I get the flexibility and power to extend it in other creative ways, if I see fit later, without having to implement everything myself.
 - I plan to use it in my other pet projects to come and wanted it to be modular and tunable and this way I have complete control.
