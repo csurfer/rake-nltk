@@ -6,4 +6,4 @@ install:
   - pip install -r requirements.txt
 # Command to run tests.
 script:
-  - python rake_test.py
+  - pytest rake_test.py
