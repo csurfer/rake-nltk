@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/csurfer/rake-nltk.svg?branch=master)](https://travis-ci.org/csurfer/rake-nltk)
 [![Licence](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/csurfer/rake-nltk/master/LICENSE)
+[![Coverage Status](https://coveralls.io/repos/github/csurfer/rake-nltk/badge.svg?branch=master)](https://coveralls.io/github/csurfer/rake-nltk?branch=master)
 
 RAKE short for Rapid Automatic Keyword Extraction algorithm, is a domain independent keyword extraction algorithm which tries to determine key phrases in a body of text by analyzing the frequency of word appearance and its co-occurance with other words in the text.
 

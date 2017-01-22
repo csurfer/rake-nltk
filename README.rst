@@ -1,7 +1,7 @@
 rake-nltk
 =========
 
-|Build Status| |Licence|
+|Build Status| |Licence| |Coverage Status|
 
 RAKE short for Rapid Automatic Keyword Extraction algorithm, is a domain
 independent keyword extraction algorithm which tries to determine key
@@ -60,4 +60,6 @@ Pull requests are most welcome.
    :target: https://travis-ci.org/csurfer/rake-nltk
 .. |Licence| image:: https://img.shields.io/badge/license-MIT-blue.svg
    :target: https://raw.githubusercontent.com/csurfer/rake-nltk/master/LICENSE
+.. |Coverage Status| image:: https://coveralls.io/repos/github/csurfer/rake-nltk/badge.svg?branch=master
+   :target: https://coveralls.io/github/csurfer/rake-nltk?branch=master
 .. |Demo| image:: http://i.imgur.com/wVOzU7y.gif
