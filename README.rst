@@ -8,7 +8,7 @@ independent keyword extraction algorithm which tries to determine key
 phrases in a body of text by analyzing the frequency of word appearance
 and its co-occurance with other words in the text.
 
-|image2|
+|Demo|
 
 References
 ----------
@@ -60,4 +60,4 @@ Pull requests are most welcome.
    :target: https://travis-ci.org/csurfer/rake-nltk
 .. |Licence| image:: https://img.shields.io/badge/license-MIT-blue.svg
    :target: https://raw.githubusercontent.com/csurfer/rake-nltk/master/LICENSE
-.. |image2| image:: http://i.imgur.com/keQklG3.gif
+.. |Demo| image:: http://i.imgur.com/wVOzU7y.gif

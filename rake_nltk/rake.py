@@ -2,15 +2,13 @@
 #!/usr/bin/env python
 '''Implementation of Rapid Automatic Keyword Extraction algorithm.
 
-As described in the paper
-
-    `Automatic keyword extraction from individual documents`
-
-by Stuart Rose, Dave Engel, Nick Cramer and Wendy Cowley.
+As described in the paper `Automatic keyword extraction from individual
+documents` by Stuart Rose, Dave Engel, Nick Cramer and Wendy Cowley.
 '''
 
-__author__ = 'Vishwas B Sharma <sharma.vishwas88@gmail.com>'
-__date__ = '17 January 2017'
+__author__ = 'Vishwas B Sharma'
+__author_email__ = 'sharma.vishwas88@gmail.com'
+__version__ = '1.0.0'
 
 import string
 from collections import defaultdict
@@ -19,11 +17,16 @@ from itertools import chain, groupby, product
 import nltk
 from nltk.tokenize import wordpunct_tokenize
 
-# If missing corpus or missing punkt error is thrown you might have to download
-# them using the following.
-#
-# nltk.download('punkt')
-# nltk.download('stopwords')
+# Ensure NLTK punkt package exists.
+try:
+    _ = nltk.tokenize.word_tokenize('Test string.')
+except Exception:
+    nltk.download('punkt')
+# Ensure NLTK english.pickle exists.
+try:
+    _ = nltk.corpus.stopwords.words('english')
+except Exception:
+    nltk.download('stopwords')
 
 
 class Rake(object):

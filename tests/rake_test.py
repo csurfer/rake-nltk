@@ -2,18 +2,18 @@
 #!/usr/bin/env python
 '''Unit tests for Rake.py'''
 
-__author__ = 'Vishwas B Sharma <sharma.vishwas88@gmail.com>'
-__date__ = '17 January 2017'
+__author__ = 'Vishwas B Sharma'
+__author_email__ = 'sharma.vishwas88@gmail.com'
+__version__ = '1.0.0'
 
 import unittest
-from rake import Rake
 from collections import defaultdict
 
-# To ensure tokenization runs without a hitch in TravisCL.#
 import nltk
-nltk.download('punkt')
-nltk.download('stopwords')
+from rake_nltk import Rake
+
 ###########################################################
+
 
 class RakeUnitTest(unittest.TestCase):
 

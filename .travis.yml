@@ -7,6 +7,7 @@ python:
 # Command to install dependencies.
 install:
   - pip install -r requirements.txt
+  - pip install coveralls
 # Command to run tests.
 script:
-  - python rake_test.py
+  - coverage run --source=rake_nltk setup.py test
