@@ -37,7 +37,7 @@ setup(
     classifiers=[
         # Intended Audience.
         'Intended Audience :: Developers',
-        'Intended Audience :: Education'
+        'Intended Audience :: Education',
         # License.
         'License :: OSI Approved :: MIT License',
         # Project maturity.
