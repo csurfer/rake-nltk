@@ -10,6 +10,40 @@ and its co-occurance with other words in the text.
 
 |Demo|
 
+Setup
+-----
+
+Using pip
+~~~~~~~~~
+
+.. code:: bash
+
+    pip install rake-nltk
+
+Directly from the repository
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: bash
+
+    git clone https://github.com/csurfer/rake-nltk.git
+    python rake-nltk/setup.py install
+
+Usage
+-----
+
+.. code:: python
+
+    from rake_nltk import Rake
+
+    r = Rake() # Uses stopwords for english from NLTK, and all puntuation characters.
+
+    # If you want to provide your own set of stop words and punctuations to
+    # r = Rake(<list of stopwords>, <string of puntuations to ignore>
+
+    r.extract_keywords_from_text(<text to process>)
+
+    r.get_ranked_phrases() # To get keyword phrases ranked highest to lowest.
+
 References
 ----------
 
