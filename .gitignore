@@ -1,3 +1,4 @@
+*.pyc
 .Python
 bin/
 include/
