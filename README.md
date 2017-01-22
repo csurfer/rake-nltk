@@ -23,3 +23,11 @@ This is a python implementation of the algorithm as mentioned in paper [Automati
 - 3.4
 - 3.5
 - 3.6
+
+## Contributing
+
+### Bug Reports and Feature Requests
+Please use [issue tracker](https://github.com/csurfer/rake-nltk/issues) for reporting bugs or feature requests.
+
+### Development
+Pull requests are most welcome.
