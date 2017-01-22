@@ -8,6 +8,36 @@ RAKE short for Rapid Automatic Keyword Extraction algorithm, is a domain indepen
 
 ![Demo](http://i.imgur.com/wVOzU7y.gif)
 
+## Setup
+
+### Using pip
+
+```bash
+pip install rake-nltk
+```
+
+### Directly from the repository
+
+```bash
+git clone https://github.com/csurfer/rake-nltk.git
+python rake-nltk/setup.py install
+```
+
+## Usage
+
+```python
+from rake_nltk import Rake
+
+r = Rake() # Uses stopwords for english from NLTK, and all puntuation characters.
+
+# If you want to provide your own set of stop words and punctuations to
+# r = Rake(<list of stopwords>, <string of puntuations to ignore>
+
+r.extract_keywords_from_text(<text to process>)
+
+r.get_ranked_phrases() # To get keyword phrases ranked highest to lowest.
+```
+
 ## References
 
 This is a python implementation of the algorithm as mentioned in paper [Automatic keyword extraction from individual documents by Stuart Rose, Dave Engel, Nick Cramer and Wendy Cowley](https://www.researchgate.net/profile/Stuart_Rose/publication/227988510_Automatic_Keyword_Extraction_from_Individual_Documents/links/55071c570cf27e990e04c8bb.pdf)
