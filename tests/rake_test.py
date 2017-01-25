@@ -100,6 +100,7 @@ class RakeUnitTest(unittest.TestCase):
             'compatibility'
         ]
         self.assertEqual(r.get_ranked_phrases(), ranked_phrases)
+        self.assertEqual([phrase for _, phrase in r.get_ranked_phrases_with_scores()], ranked_phrases)
 
 
 if __name__ == '__main__':
