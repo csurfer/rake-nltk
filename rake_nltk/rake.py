@@ -163,23 +163,15 @@ class Rake(object):
 
            @param sentences: List of strings where each string represents a
            sentence which forms the text.
-           @return: List of List of strings where each sublist is a collection
-           of words which form the contender phrase.
+           @return: Set of string tuples where each tuple is a collection
+           of words forming a contender phrase.
         '''
-        phrase_list = []
+        phrase_list = set()
         # Create contender phrases from sentences.
         for sentence in sentences:
             word_list = [word.lower() for word in wordpunct_tokenize(sentence)]
-            phrase_list.extend(self._get_phrase_list_from_words(word_list))
-        # Drop duplicates from the list.
-        unique_phrase_list = []
-        seen = defaultdict(lambda: False)
-        for phrase in phrase_list:
-            phrase_str = ' '.join(phrase)
-            if not seen[phrase_str]:
-                seen[phrase_str] = True
-                unique_phrase_list.append(phrase)
-        return unique_phrase_list
+            phrase_list.update(self._get_phrase_list_from_words(word_list))
+        return phrase_list
 
     def _get_phrase_list_from_words(self, word_list):
         '''Method to create contender phrases from the list of words that form a
@@ -190,7 +182,7 @@ class Rake(object):
            List of words: ['red', 'apples', ",", 'are', 'good', 'in', 'flavour']
            List after dropping punctuations and stopwords.
            List of words: ['red', 'apples', *, *, good, *, 'flavour']
-           List of phrases: [['red', 'apples'], ['good'], ['flavour']]
+           List of phrases: [('red', 'apples'), ('good',), ('flavour',)]
 
            @param word_list: List of words which form a sentence when joined in
            the same order.
@@ -200,5 +192,5 @@ class Rake(object):
         phrase_list = []
         for group in groupby(word_list, lambda x: x in self.to_ignore):
             if not group[0]:
-                phrase_list.append(list(group[1]))
+                phrase_list.append(tuple(group[1]))
         return phrase_list
