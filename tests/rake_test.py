@@ -49,29 +49,26 @@ class RakeUnitTest(unittest.TestCase):
             'Keywords, which we define as a sequence of one or more words, ' +
             'provide a compact representation of a document\'s content'
         ]
-        phrase_list = [['red', 'apples'], ['good'], ['flavour'], ['keywords'],
-                       ['define'], ['sequence'], ['one'], ['words'],
-                       ['provide'], ['compact', 'representation'], ['document'],
-                       ['content']]
-        phrase_list = set(tuple(phrase) for phrase in phrase_list)
+        phrase_list = {('red', 'apples'), ('good',), ('flavour',), ('keywords',),
+                       ('define',), ('sequence',), ('one',), ('words',),
+                       ('provide',), ('compact', 'representation'), ('document',),
+                       ('content',)}
         self.assertEqual(r._generate_phrases(sentences), phrase_list)
 
     def test_get_phrase_list_from_words(self):
         r = Rake()
 
         word_list = ['red', 'apples', ",", 'are', 'good', 'in', 'flavour']
-        phrase_list = [['red', 'apples'], ['good'], ['flavour']]
-        phrase_list = list(tuple(phrase) for phrase in phrase_list)
+        phrase_list = [('red', 'apples'), ('good',), ('flavour',)]
         self.assertEqual(r._get_phrase_list_from_words(word_list), phrase_list)
 
         word_list = ['keywords', ",", 'which', 'we', 'define', 'as', 'a',
                      'sequence', 'of', 'one', 'or', 'more', 'words', ",",
                      'provide', 'a', 'compact', 'representation', 'of', 'a',
                      'document', '\'', 's', 'content']
-        phrase_list = [['keywords'], ['define'], ['sequence'], ['one'],
-                       ['words'], ['provide'], ['compact', 'representation'],
-                       ['document'], ['content']]
-        phrase_list = list(tuple(phrase) for phrase in phrase_list)
+        phrase_list = [('keywords',), ('define',), ('sequence',), ('one',),
+                       ('words',), ('provide',), ('compact', 'representation'),
+                       ('document',), ('content',)]
         self.assertEqual(r._get_phrase_list_from_words(word_list), phrase_list)
 
     def test_extract_keywords_from_text(self):

@@ -163,8 +163,8 @@ class Rake(object):
 
            @param sentences: List of strings where each string represents a
            sentence which forms the text.
-           @return: List of List of strings where each sublist is a collection
-           of words which form the contender phrase.
+           @return: Set of string tuples where each tuple is a collection
+           of words forming a contender phrase.
         '''
         phrase_list = set()
         # Create contender phrases from sentences.
@@ -182,7 +182,7 @@ class Rake(object):
            List of words: ['red', 'apples', ",", 'are', 'good', 'in', 'flavour']
            List after dropping punctuations and stopwords.
            List of words: ['red', 'apples', *, *, good, *, 'flavour']
-           List of phrases: [['red', 'apples'], ['good'], ['flavour']]
+           List of phrases: [('red', 'apples'), ('good',), ('flavour',)]
 
            @param word_list: List of words which form a sentence when joined in
            the same order.
