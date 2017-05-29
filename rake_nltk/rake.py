@@ -31,17 +31,18 @@ except Exception:
 
 class Rake(object):
 
-    def __init__(self, stopwords=None, punctuations=None):
+    def __init__(self, stopwords=None, punctuations=None, language='english'):
         '''Constructor.
 
            @param stopwords: List of Words to be ignored for keyword extraction.
            @param punctuations: Punctuations to be ignored for keyword
            extraction.
+           @param language: Language stopwords
         '''
-        # If stopwords not provided we use stopwords in english by default.
+        # If stopwords not provided we use language stopwords by default.
         self.stopwords = stopwords
         if self.stopwords is None:
-            self.stopwords = nltk.corpus.stopwords.words('english')
+            self.stopwords = nltk.corpus.stopwords.words(language)
 
         # If punctuations are not provided we ignore all punctuation symbols.
         self.punctuations = punctuations
