@@ -1,7 +1,7 @@
 rake-nltk
 =========
 
-|Build Status| |Licence| |Coverage Status|
+|pypiv| |pyv| |Licence| |Build Status| |Coverage Status|
 
 RAKE short for Rapid Automatic Keyword Extraction algorithm, is a domain
 independent keyword extraction algorithm which tries to determine key
@@ -97,3 +97,7 @@ Pull requests are most welcome.
 .. |Coverage Status| image:: https://coveralls.io/repos/github/csurfer/rake-nltk/badge.svg?branch=master
    :target: https://coveralls.io/github/csurfer/rake-nltk?branch=master
 .. |Demo| image:: http://i.imgur.com/wVOzU7y.gif
+.. |pypiv| image:: https://img.shields.io/pypi/v/rake-nltk.svg
+   :target: https://pypi.python.org/pypi/rake-nltk
+.. |pyv| image:: https://img.shields.io/pypi/pyversions/rake-nltk.svg
+   :target: https://pypi.python.org/pypi/rake-nltk
