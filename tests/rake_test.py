@@ -99,6 +99,10 @@ class RakeUnitTest(unittest.TestCase):
         self.assertEqual(r.get_ranked_phrases(), ranked_phrases)
         self.assertEqual([phrase for _, phrase in r.get_ranked_phrases_with_scores()], ranked_phrases)
 
+    def test_load_portuguese_stopwords(self):
+        r = Rake(language='portuguese')
+        self.assertIsNotNone(r.stopwords)
+
 
 if __name__ == '__main__':
     unittest.main()
