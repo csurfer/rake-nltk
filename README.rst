@@ -75,14 +75,6 @@ Why I chose to implement it myself?
 -  I plan to use it in my other pet projects to come and wanted it to be
    modular and tunable and this way I have complete control.
 
-Versions of python this code is tested against
-----------------------------------------------
-
--  2.7
--  3.4
--  3.5
--  3.6
-
 Contributing
 ------------
 

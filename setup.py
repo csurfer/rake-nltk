@@ -17,7 +17,7 @@ setup(
     name='rake_nltk',
 
     # Details
-    version='1.0.0',
+    version='1.0.1',
     description='Python implementation of the Rapid Automatic Keyword' +
     ' Extraction algorithm using NLTK',
     long_description=long_description,
