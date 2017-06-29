@@ -17,7 +17,9 @@ from rake_nltk import Rake
 
 class RakeUnitTest(unittest.TestCase):
 
-    def setup(self):
+    def setUp(self):
+        super(RakeUnitTest, self).setUp()
+        
         self.test_text = '''Compatibility of systems of linear constraints over 
         the set of natural numbers. Criteria of compatibility of a system of linear
         Diophantine equations, strict inequations, and nonstrict inequations are
