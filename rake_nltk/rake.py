@@ -61,7 +61,7 @@ class Rake(object):
 
         self.extract_keywords_from_text(text)
 
-        if scores:
+        if with_scores:
             return self.get_ranked_phrases_with_scores()
         else:
             return self.get_ranked_phrases()
