@@ -26,7 +26,7 @@ git clone https://github.com/csurfer/rake-nltk.git
 python rake-nltk/setup.py install
 ```
 
-### Post setup
+## Post setup
 
 If you see a stopwords error, it means that you do not have the corpus stopwords downloaded from NLTK. You can download it using command below.
 
