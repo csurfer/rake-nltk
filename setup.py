@@ -12,25 +12,29 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.rst')) as f:
     long_description = f.read()
 
+# Get package and author details.
+about = {}
+with open(path.join(here, 'rake_nltk', '__version__.py')) as f:
+    exec(f.read(), about)
+
 setup(
     # Name of the module
     name='rake_nltk',
 
     # Details
-    version='1.0.1',
-    description='Python implementation of the Rapid Automatic Keyword' +
-    ' Extraction algorithm using NLTK',
+    version=about['__version__'],
+    description=about['__description__'],
     long_description=long_description,
 
     # The project's main homepage.
-    url='https://github.com/csurfer/rake-nltk',
+    url=about['__url__'],
 
     # Author details
-    author='Vishwas B Sharma',
-    author_email='sharma.vishwas88@gmail.com',
+    author=about['__author__'],
+    author_email=about['__author_email__'],
 
     # License
-    license='MIT',
+    license=about['__license__'],
     packages=['rake_nltk'],
     test_suite='tests',
     keywords='nlp text-mining algorithms development',

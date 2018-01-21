@@ -21,11 +21,4 @@ Usage of Rake class:
 :license: MIT, see LICENSE for more details.
 """
 
-__title__ = 'rake-nltk'
-__version__ = '1.0.1'
-__author__ = 'Vishwas B Sharma'
-__author_email__ = 'sharma.vishwas88@gmail.com'
-__license__ = 'MIT'
-__copyright__ = 'Copyright 2017 Vishwas B Sharma'
-
 from .rake import Rake

@@ -6,7 +6,7 @@ documents` by Stuart Rose, Dave Engel, Nick Cramer and Wendy Cowley.
 """
 
 import string
-from collections import defaultdict
+from collections import defaultdict, Counter
 from itertools import chain, groupby, product
 
 import nltk
@@ -41,10 +41,10 @@ class Rake(object):
         # If punctuations are not provided we ignore all punctuation symbols.
         self.punctuations = punctuations
         if self.punctuations is None:
-            self.punctuations = list(string.punctuation)
+            self.punctuations = string.punctuation
 
         # All things which act as sentence breaks during keyword extraction.
-        self.to_ignore = set(self.stopwords + self.punctuations)
+        self.to_ignore = set(chain(self.stopwords, self.punctuations))
 
         # Stuff to be extracted from the provided text.
         self.frequency_dist = None
@@ -109,9 +109,7 @@ class Rake(object):
         :param phrase_list: List of List of strings where each sublist is a
                             collection of words which form a contender phrase.
         """
-        self.frequency_dist = defaultdict(lambda: 0)
-        for word in chain.from_iterable(phrase_list):
-            self.frequency_dist[word] += 1
+        self.frequency_dist = Counter(chain.from_iterable(phrase_list))
 
     def _build_word_co_occurance_graph(self, phrase_list):
         """Builds the co-occurance graph of words in the given body of text to
@@ -183,8 +181,5 @@ class Rake(object):
         :return: List of contender phrases that are formed after dropping
                  stopwords and punctuations.
         """
-        phrase_list = []
-        for group in groupby(word_list, lambda x: x in self.to_ignore):
-            if not group[0]:
-                phrase_list.append(tuple(group[1]))
-        return phrase_list
+        groups = groupby(word_list, lambda x: x not in self.to_ignore)
+        return [tuple(group[1]) for group in groups if group[0]]
