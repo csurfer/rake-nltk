@@ -14,19 +14,19 @@ from nltk.tokenize import wordpunct_tokenize
 
 # Ensure NLTK punkt package exists.
 try:
-    _ = nltk.tokenize.word_tokenize('Test string.')
+    _ = nltk.tokenize.word_tokenize("Test string.")
 except Exception:
-    nltk.download('punkt')
+    nltk.download("punkt")
 # Ensure NLTK english.pickle exists.
 try:
-    _ = nltk.corpus.stopwords.words('english')
+    _ = nltk.corpus.stopwords.words("english")
 except Exception:
-    nltk.download('stopwords')
+    nltk.download("stopwords")
 
 
 class Rake(object):
 
-    def __init__(self, stopwords=None, punctuations=None, language='english'):
+    def __init__(self, stopwords=None, punctuations=None, language="english"):
         """Constructor.
 
         :param stopwords: List of Words to be ignored for keyword extraction.
@@ -145,7 +145,7 @@ class Rake(object):
             rank = 0.0
             for word in phrase:
                 rank += 1.0 * self.degree[word] / self.frequency_dist[word]
-            self.rank_list.append((rank, ' '.join(phrase)))
+            self.rank_list.append((rank, " ".join(phrase)))
         self.rank_list.sort(reverse=True)
         self.ranked_phrases = [ph[1] for ph in self.rank_list]
 
