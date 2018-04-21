@@ -1,16 +1,40 @@
 #!/usr/bin/env python
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
-
 from os import path
+
+from setuptools import setup
+from setuptools.command.develop import develop
+from setuptools.command.install import install
 
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
 with open(path.join(here, "README.rst")) as f:
     long_description = f.read()
+
+
+def _post_install():
+    """Post installation nltk corpus downloads."""
+    import nltk
+
+    nltk.download("punkt")
+    nltk.download("stopwords")
+
+
+class PostDevelop(develop):
+    """Post-installation for development mode."""
+
+    def run(self):
+        develop.run(self)
+        self.execute(_post_install, [], msg="Running post installation tasks")
+
+
+class PostInstall(install):
+    """Post-installation for production mode."""
+
+    def run(self):
+        install.run(self)
+        self.execute(_post_install, [], msg="Running post installation tasks")
+
 
 # Get package and author details.
 about = {}
@@ -54,4 +78,5 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     install_requires=["nltk"],
+    cmdclass={"develop": PostDevelop, "install": PostInstall},
 )

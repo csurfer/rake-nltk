@@ -6,33 +6,44 @@ documents` by Stuart Rose, Dave Engel, Nick Cramer and Wendy Cowley.
 """
 
 import string
-from collections import defaultdict, Counter
+from collections import Counter, defaultdict
 from itertools import chain, groupby, product
 
 import nltk
+from enum import Enum
 from nltk.tokenize import wordpunct_tokenize
 
-# Ensure NLTK punkt package exists.
-try:
-    _ = nltk.tokenize.word_tokenize("Test string.")
-except Exception:
-    nltk.download("punkt")
-# Ensure NLTK english.pickle exists.
-try:
-    _ = nltk.corpus.stopwords.words("english")
-except Exception:
-    nltk.download("stopwords")
+
+class Metric(Enum):
+    """Different metrics that can be used for ranking."""
+
+    DEGREE_TO_FREQUENCY_RATIO = 0  # Uses d(w)/f(w) as the metric
+    WORD_DEGREE = 1  # Uses d(w) alone as the metric
+    WORD_FREQUENCY = 2  # Uses f(w) alone as the metric
 
 
 class Rake(object):
+    """Rapid Automatic Keyword Extraction Algorithm."""
 
-    def __init__(self, stopwords=None, punctuations=None, language="english"):
+    def __init__(
+        self,
+        stopwords=None,
+        punctuations=None,
+        language="english",
+        ranking_metric=Metric.DEGREE_TO_FREQUENCY_RATIO,
+    ):
         """Constructor.
 
         :param stopwords: List of Words to be ignored for keyword extraction.
         :param punctuations: Punctuations to be ignored for keyword extraction.
         :param language: Language to be used for stopwords
         """
+        # By default use degree to frequency ratio as the metric.
+        if isinstance(ranking_metric, Metric):
+            self.metric = ranking_metric
+        else:
+            self.metric = Metric.DEGREE_TO_FREQUENCY_RATIO
+
         # If stopwords not provided we use language stopwords by default.
         self.stopwords = stopwords
         if self.stopwords is None:
@@ -144,7 +155,12 @@ class Rake(object):
         for phrase in phrase_list:
             rank = 0.0
             for word in phrase:
-                rank += 1.0 * self.degree[word] / self.frequency_dist[word]
+                if self.metric == Metric.DEGREE_TO_FREQUENCY_RATIO:
+                    rank += 1.0 * self.degree[word] / self.frequency_dist[word]
+                elif self.metric == Metric.WORD_DEGREE:
+                    rank += 1.0 * self.degree[word]
+                else:
+                    rank += 1.0 * self.frequency_dist[word]
             self.rank_list.append((rank, " ".join(phrase)))
         self.rank_list.sort(reverse=True)
         self.ranked_phrases = [ph[1] for ph in self.rank_list]

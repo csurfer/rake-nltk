@@ -16,9 +16,10 @@ Usage of Rake class:
     >>> from rake_nltk import Rake
     >>> r = Rake() # With language as English
     >>> r = Rake(language=<language>) # With language set to <language>
+    >>> r = Rake(ranking_metric=Metric.<ranking_metric>)
 
 :copyright: (c) 2017 by Vishwas B Sharma.
 :license: MIT, see LICENSE for more details.
 """
 
-from .rake import Rake
+from .rake import Metric, Rake

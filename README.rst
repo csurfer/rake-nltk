@@ -38,8 +38,8 @@ If you see a stopwords error, it means that you do not have the corpus
 
     python -c "import nltk; nltk.download('stopwords')"
 
-Usage
------
+Basic Usage
+-----------
 
 .. code:: python
 
@@ -47,14 +47,35 @@ Usage
 
     r = Rake() # Uses stopwords for english from NLTK, and all puntuation characters.
 
-    r = Rake(language=<language>) # To use it in a specific language supported by nltk.
-
-    # If you want to provide your own set of stop words and punctuations to
-    # r = Rake(<list of stopwords>, <string of puntuations to ignore>)
-
     r.extract_keywords_from_text(<text to process>)
 
     r.get_ranked_phrases() # To get keyword phrases ranked highest to lowest.
+
+Advanced Usage
+--------------
+
+.. code:: python
+
+    from rake_nltk import Metric, Rake
+
+    # To use it with a specific language supported by nltk.
+    r = Rake(language=<language>)
+
+    # If you want to provide your own set of stop words and punctuations to
+    r = Rake(
+        stopwords=<list of stopwords>,
+        punctuations=<string of puntuations to ignore>
+    )
+
+    # If you want to control the metric for ranking. Paper uses d(w)/f(w) as the
+    # metric. You can use this API with the following metrics:
+    # 1. d(w)/f(w) (Default metric) Ratio of degree of word to its frequency.
+    # 2. d(w) Degree of word only.
+    # 3. f(w) Frequency of word only.
+
+    r = Rake(ranking_metric=Metric.DEGREE_TO_FREQUENCY_RATIO)
+    r = Rake(ranking_metric=Metric.WORD_DEGREE)
+    r = Rake(ranking_metric=Metric.WORD_FREQUENCY)
 
 References
 ----------
