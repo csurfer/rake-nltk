@@ -17,6 +17,32 @@ from rake_nltk import Rake
 
 class RakeUnitTest(unittest.TestCase):
 
+    def setUp(self):
+        super(RakeUnitTest, self).setUp()
+        
+        self.test_text = '''Compatibility of systems of linear constraints over 
+        the set of natural numbers. Criteria of compatibility of a system of linear
+        Diophantine equations, strict inequations, and nonstrict inequations are
+        considered. Upper bounds for components of a minimal set of solutions
+        and algorithms of construction of minimal generating sets of solutions
+        for all types of systems are given. These criteria and the corresponding
+        algorithms for constructing a minimal supporting set of solutions can be
+        used in solving all the considered types of systems and systems of mixed
+        types.'''
+
+    def test_run(self):
+        r = Rake()
+
+        phrases = r.run(self.test_text)
+        scored_phrases = r.run(self.test_text, with_scores=True)
+
+        for phrase in phrases:
+            self.assertEqual(type(phrase), str)
+
+        for score, phrase in scored_phrases:
+            self.assertEqual(type(score), float)
+            self.assertEqual(type(phrase), str)        
+
     def test_build_frequency_dist(self):
         r = Rake()
 
@@ -72,19 +98,9 @@ class RakeUnitTest(unittest.TestCase):
         self.assertEqual(r._get_phrase_list_from_words(word_list), phrase_list)
 
     def test_extract_keywords_from_text(self):
-        r = Rake()
+        r = Rake()        
 
-        text = '''Compatibility of systems of linear constraints over the set of
-        natural numbers. Criteria of compatibility of a system of linear
-        Diophantine equations, strict inequations, and nonstrict inequations are
-        considered. Upper bounds for components of a minimal set of solutions
-        and algorithms of construction of minimal generating sets of solutions
-        for all types of systems are given. These criteria and the corresponding
-        algorithms for constructing a minimal supporting set of solutions can be
-        used in solving all the considered types of systems and systems of mixed
-        types.'''
-
-        r.extract_keywords_from_text(text)
+        r.extract_keywords_from_text(self.test_text)
 
         ranked_phrases = [
             'minimal generating sets', 'linear diophantine equations',

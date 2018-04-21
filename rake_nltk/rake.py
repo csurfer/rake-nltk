@@ -52,6 +52,20 @@ class Rake(object):
         self.rank_list = None
         self.ranked_phrases = None
 
+    def run(self, text=None, with_scores=None):
+        """Default run method to simplify api
+        
+        :param text: Text to extract keywords from, provided as a string.
+        :param with_scores: If True return ranked phrases with scores
+        """
+
+        self.extract_keywords_from_text(text)
+
+        if with_scores:
+            return self.get_ranked_phrases_with_scores()
+        else:
+            return self.get_ranked_phrases()
+
     def extract_keywords_from_text(self, text):
         """Method to extract keywords from the text provided.
 
