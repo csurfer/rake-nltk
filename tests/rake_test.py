@@ -72,6 +72,23 @@ class RakeUnitTest(unittest.TestCase):
         }
         self.assertEqual(r._generate_phrases(sentences), phrase_list)
 
+    def test_generate_phrases_with_length_limit(self):
+        r = Rake(min_length=2, max_length=4)
+
+        sentences = [
+            "Red apples, are good in flavour.",
+            "Keywords, which we define as a sequence of one or more words, "
+            + "provide a compact representation of a document's content",
+            "Criteria of compatibility of a system of linear Diophantine "
+            + "equations",
+        ]
+        phrase_list = {
+            ("red", "apples"),
+            ("compact", "representation"),
+            ("linear", "diophantine", "equations"),
+        }
+        self.assertEqual(r._generate_phrases(sentences), phrase_list)
+
     def test_get_phrase_list_from_words(self):
         r = Rake()
 
