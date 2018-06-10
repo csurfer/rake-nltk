@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'rake_nltk'
+project = 'rake-nltk'
 copyright = '2018, Vishwas B Sharma'
 author = 'Vishwas B Sharma'
 
