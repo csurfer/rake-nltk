@@ -86,7 +86,7 @@ html_theme = 'alabaster'
 html_theme_options = {
     'description': 'Python implementation of the Rapid Automatic Keyword Extraction algorithm using NLTK.',
     'github_user': 'csurfer',
-    'github_repo': 'rake_nltk',
+    'github_repo': 'rake-nltk',
     'github_type': 'star',
     'github_banner': True,
     'fixed_sidebar': True,
