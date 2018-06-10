@@ -55,6 +55,11 @@ class RakeUnitTest(unittest.TestCase):
             "Red apples, are good in flavour.",
             "Keywords, which we define as a sequence of one or more words, "
             + "provide a compact representation of a document's content",
+            "Criteria of compatibility of a system of linear Diophantine "
+            + "equations",
+            "whose gloomy beams transfigured the village into a lunar "
+            + "encampment of glowing houses and streets of volcanic deserts "
+            + "every fifteen seconds "
         ]
         phrase_list = {
             ("red", "apples"),
@@ -69,6 +74,16 @@ class RakeUnitTest(unittest.TestCase):
             ("compact", "representation"),
             ("document",),
             ("content",),
+            ("criteria",),
+            ("compatibility",),
+            ("system",),
+            ("linear", "diophantine", "equations"),
+            ("whose", "gloomy", "beams", "transfigured"),
+            ("volcanic", "deserts", "every", "fifteen", "seconds"),
+            ("lunar", "encampment"),
+            ("glowing", "houses"),
+            ("village",),
+            ("streets",),
         }
         self.assertEqual(r._generate_phrases(sentences), phrase_list)
 
@@ -81,11 +96,23 @@ class RakeUnitTest(unittest.TestCase):
             + "provide a compact representation of a document's content",
             "Criteria of compatibility of a system of linear Diophantine "
             + "equations",
+            "whose gloomy beams transfigured the village into a lunar "
+            + "encampment of glowing houses and streets of volcanic deserts "
+            + "every fifteen seconds "
         ]
         phrase_list = {
             ("red", "apples"),
             ("compact", "representation"),
             ("linear", "diophantine", "equations"),
+            ("whose", "gloomy", "beams", "transfigured"),
+            ("lunar", "encampment",),
+            ("glowing", "houses",),
+        }
+        self.assertEqual(r._generate_phrases(sentences), phrase_list)
+
+        r = Rake(min_length=5, max_length=5)
+        phrase_list = {
+            ("volcanic", "deserts", "every", "fifteen", "seconds",),
         }
         self.assertEqual(r._generate_phrases(sentences), phrase_list)
 
