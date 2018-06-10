@@ -34,47 +34,26 @@ If you see a stopwords error, it means that you do not have the corpus stopwords
 python -c "import nltk; nltk.download('stopwords')"
 ```
 
-## Basic usage
+## Quick start
 
 ```python
 from rake_nltk import Rake
 
-# Uses stopwords for english from NLTK, and all puntuation characters.
+# Uses stopwords for english from NLTK, and all puntuation characters by
+# default
 r = Rake()
 
+# Extraction given the text.
 r.extract_keywords_from_text(<text to process>)
 
-r.get_ranked_phrases() # To get keyword phrases ranked highest to lowest.
-```
+# Extraction given the list of strings where each string is a sentence.
+r.extract_keywords_from_sentences(<list of sentences>)
 
-## Advanced usage
+# To get keyword phrases ranked highest to lowest.
+r.get_ranked_phrases()
 
-```python
-from rake_nltk import Metric, Rake
-
-# To use it with a specific language supported by nltk.
-r = Rake(language=<language>)
-
-# If you want to provide your own set of stop words and punctuations to
-r = Rake(
-    stopwords=<list of stopwords>,
-    punctuations=<string of puntuations to ignore>
-)
-
-# If you want to control the metric for ranking. Paper uses d(w)/f(w) as the
-# metric. You can use this API with the following metrics:
-# 1. d(w)/f(w) (Default metric) Ratio of degree of word to its frequency.
-# 2. d(w) Degree of word only.
-# 3. f(w) Frequency of word only.
-
-r = Rake(ranking_metric=Metric.DEGREE_TO_FREQUENCY_RATIO)
-r = Rake(ranking_metric=Metric.WORD_DEGREE)
-r = Rake(ranking_metric=Metric.WORD_FREQUENCY)
-
-# If you want to control the max or min words in a phrase, for it to be
-# considered for ranking you can initialize a Rake instance as below:
-
-r = Rake(min_length=2, max_length=4)
+# To get keyword phrases ranked highest to lowest with scores.
+r.get_ranked_phrases_with_scores()
 ```
 
 ## References

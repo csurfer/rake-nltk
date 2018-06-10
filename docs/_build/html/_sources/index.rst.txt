@@ -1,3 +1,12 @@
+.. rake_nltk documentation master file, created by
+   sphinx-quickstart on Sun Jun 10 00:44:16 2018.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
 rake-nltk
 =========
 
@@ -60,6 +69,28 @@ Quick Start
 
     # To get keyword phrases ranked highest to lowest with scores.
     r.get_ranked_phrases_with_scores()
+
+API Reference
+-------------
+
+If you are looking for information on a specific function, class or
+method, this part of the documentation is for you.
+
+.. toctree::
+   :maxdepth: 2
+
+   api
+
+User guide
+----------
+
+If you are looking for general information on choices you have and what choice
+can lead to what action, this part of the documentation is for you.
+
+.. toctree::
+   :maxdepth: 2
+
+   advanced
 
 References
 ----------
