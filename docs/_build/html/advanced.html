@@ -82,11 +82,11 @@ which this implementation of Rake algorithm can be used for several different
 purposes.</p>
 <ul class="simple">
 <li>stopwords : List of words which are considered to break sentences into
-phrases. Defaults to <cite>None</cite>.</li>
+phrases. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
 <li>punctuations : List of punctuations which are considered to break sentences
-into phrases. Defaults to <cite>None</cite>.</li>
+into phrases. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
 <li>language : Language to use for tokenization and stopwords. Defaults to
-<cite>english</cite>.</li>
+<code class="docutils literal notranslate"><span class="pre">english</span></code>.</li>
 <li><dl class="first docutils">
 <dt>ranking_metric <span class="classifier-delimiter">:</span> <span class="classifier">Metric to use for ranking of metrics</span></dt>
 <dd><ul class="first last">
@@ -97,8 +97,8 @@ into phrases. Defaults to <cite>None</cite>.</li>
 </dd>
 </dl>
 </li>
-<li>max_length : Of phrases to consider. Defaults to 100000.</li>
-<li>min_length : Of phrases to consider. Defaults to 1.</li>
+<li>max_length : Of phrases to consider. Defaults to <code class="docutils literal notranslate"><span class="pre">100000</span></code>.</li>
+<li>min_length : Of phrases to consider. Defaults to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</li>
 </ul>
 <div class="section" id="to-use-it-with-a-specific-language-supported-by-nltk">
 <h2>to use it with a specific language supported by nltk.<a class="headerlink" href="#to-use-it-with-a-specific-language-supported-by-nltk" title="Permalink to this headline">¶</a></h2>
@@ -107,8 +107,8 @@ into phrases. Defaults to <cite>None</cite>.</li>
 <span class="n">r</span> <span class="o">=</span> <span class="n">Rake</span><span class="p">(</span><span class="n">language</span><span class="o">=&lt;</span><span class="n">language</span><span class="o">&gt;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Implementation automatically picks up the <cite>stopwords</cite> for that language and
-default <cite>punctuation</cite> set.</p>
+<p>Implementation automatically picks up the <code class="docutils literal notranslate"><span class="pre">stopwords</span></code> for that language and
+default <code class="docutils literal notranslate"><span class="pre">punctuation</span></code> set.</p>
 </div>
 <div class="section" id="to-provide-your-own-list-of-stop-words-and-punctuations">
 <h2>to provide your own list of stop words and punctuations<a class="headerlink" href="#to-provide-your-own-list-of-stop-words-and-punctuations" title="Permalink to this headline">¶</a></h2>

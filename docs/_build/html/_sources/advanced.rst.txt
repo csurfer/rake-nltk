@@ -6,17 +6,17 @@ which this implementation of Rake algorithm can be used for several different
 purposes.
 
 * stopwords : List of words which are considered to break sentences into
-  phrases. Defaults to `None`.
+  phrases. Defaults to ``None``.
 * punctuations : List of punctuations which are considered to break sentences
-  into phrases. Defaults to `None`.
+  into phrases. Defaults to ``None``.
 * language : Language to use for tokenization and stopwords. Defaults to
-  `english`.
+  ``english``.
 * ranking_metric : Metric to use for ranking of metrics
     * Ratio of degree of word to its frequency d(w)/f(w). (Default)
     * Degree of word only.
     * Frequency of word only.
-* max_length : Of phrases to consider. Defaults to 100000.
-* min_length : Of phrases to consider. Defaults to 1.
+* max_length : Of phrases to consider. Defaults to ``100000``.
+* min_length : Of phrases to consider. Defaults to ``1``.
 
 to use it with a specific language supported by nltk.
 -----------------------------------------------------
@@ -27,8 +27,8 @@ to use it with a specific language supported by nltk.
 
     r = Rake(language=<language>)
 
-Implementation automatically picks up the `stopwords` for that language and
-default `punctuation` set.
+Implementation automatically picks up the ``stopwords`` for that language and
+default ``punctuation`` set.
 
 to provide your own list of stop words and punctuations
 -------------------------------------------------------
