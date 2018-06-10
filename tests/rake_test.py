@@ -12,7 +12,6 @@ from rake_nltk import Metric, Rake
 
 
 class RakeUnitTest(unittest.TestCase):
-
     def setUp(self):
         self.text = """Compatibility of systems of linear constraints
         over the set of natural numbers. Criteria of compatibility of a system
@@ -59,7 +58,7 @@ class RakeUnitTest(unittest.TestCase):
             + "equations",
             "whose gloomy beams transfigured the village into a lunar "
             + "encampment of glowing houses and streets of volcanic deserts "
-            + "every fifteen seconds "
+            + "every fifteen seconds ",
         ]
         phrase_list = {
             ("red", "apples"),
@@ -88,8 +87,6 @@ class RakeUnitTest(unittest.TestCase):
         self.assertEqual(r._generate_phrases(sentences), phrase_list)
 
     def test_generate_phrases_with_length_limit(self):
-        r = Rake(min_length=2, max_length=4)
-
         sentences = [
             "Red apples, are good in flavour.",
             "Keywords, which we define as a sequence of one or more words, "
@@ -98,22 +95,24 @@ class RakeUnitTest(unittest.TestCase):
             + "equations",
             "whose gloomy beams transfigured the village into a lunar "
             + "encampment of glowing houses and streets of volcanic deserts "
-            + "every fifteen seconds "
+            + "every fifteen seconds ",
         ]
+
+        # Consider phrases which have minimum of 2 words and max of 4
+        r = Rake(min_length=2, max_length=4)
         phrase_list = {
             ("red", "apples"),
             ("compact", "representation"),
             ("linear", "diophantine", "equations"),
             ("whose", "gloomy", "beams", "transfigured"),
-            ("lunar", "encampment",),
-            ("glowing", "houses",),
+            ("lunar", "encampment"),
+            ("glowing", "houses"),
         }
         self.assertEqual(r._generate_phrases(sentences), phrase_list)
 
+        # Consider phrases which have minimum of 5 words and max of 5
         r = Rake(min_length=5, max_length=5)
-        phrase_list = {
-            ("volcanic", "deserts", "every", "fifteen", "seconds",),
-        }
+        phrase_list = {("volcanic", "deserts", "every", "fifteen", "seconds")}
         self.assertEqual(r._generate_phrases(sentences), phrase_list)
 
     def test_get_phrase_list_from_words(self):

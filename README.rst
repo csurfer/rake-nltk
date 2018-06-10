@@ -77,10 +77,11 @@ Advanced Usage
     r = Rake(ranking_metric=Metric.WORD_DEGREE)
     r = Rake(ranking_metric=Metric.WORD_FREQUENCY)
 
-    # If you want to control the max or min words length in all ranked phrases,
-    # you can initialize a Rake instance as below:
+    # If you want to control the max or min words in a phrase, for it to be
+    # considered for ranking you can initialize a Rake instance as below:
 
     r = Rake(min_length=2, max_length=4)
+
 References
 ----------
 

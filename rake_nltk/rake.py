@@ -39,8 +39,10 @@ class Rake(object):
         :param stopwords: List of Words to be ignored for keyword extraction.
         :param punctuations: Punctuations to be ignored for keyword extraction.
         :param language: Language to be used for stopwords
-        :param max_length: Maximum limit of the number of words in a phrase
-        :param min_length: Minimum limit of the number of words in a phrase
+        :param max_length: Maximum limit on the number of words in a phrase
+                           (Inclusive. Defaults to 100000)
+        :param min_length: Minimum limit on the number of words in a phrase
+                           (Inclusive. Defaults to 1)
         """
         # By default use degree to frequency ratio as the metric.
         if isinstance(ranking_metric, Metric):
@@ -192,8 +194,8 @@ class Rake(object):
     def _get_phrase_list_from_words(self, word_list):
         """Method to create contender phrases from the list of words that form
         a sentence by dropping stopwords and punctuations and grouping the left
-        words into phrases. Only phrases in the given range would be considered
-        to build co-occurrence matrix. Ex:
+        words into phrases. Only phrases in the given length range (both limits
+        inclusive) would be considered to build co-occurrence matrix. Ex:
 
         Sentence: Red apples, are good in flavour.
         List of words: ['red', 'apples', ",", 'are', 'good', 'in', 'flavour']
@@ -213,5 +215,8 @@ class Rake(object):
         """
         groups = groupby(word_list, lambda x: x not in self.to_ignore)
         phrases = [tuple(group[1]) for group in groups if group[0]]
-        return list(filter(
-            lambda x: self.min_length <= len(x) <= self.max_length, phrases))
+        return list(
+            filter(
+                lambda x: self.min_length <= len(x) <= self.max_length, phrases
+            )
+        )
