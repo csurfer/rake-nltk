@@ -26,14 +26,6 @@ git clone https://github.com/csurfer/rake-nltk.git
 python rake-nltk/setup.py install
 ```
 
-## Post setup
-
-If you see a stopwords error, it means that you do not have the corpus stopwords downloaded from NLTK. You can download it using command below.
-
-```bash
-python -c "import nltk; nltk.download('stopwords')"
-```
-
 ## Quick start
 
 ```python
@@ -54,6 +46,15 @@ r.get_ranked_phrases()
 
 # To get keyword phrases ranked highest to lowest with scores.
 r.get_ranked_phrases_with_scores()
+```
+
+## Debugging Setup
+
+If you see a stopwords error, it means that you do not have the corpus
+`stopwords` downloaded from NLTK. You can download it using command below.
+
+```bash
+python -c "import nltk; nltk.download('stopwords')"
 ```
 
 ## References

@@ -37,16 +37,6 @@ Directly from the repository
     git clone https://github.com/csurfer/rake-nltk.git
     python rake-nltk/setup.py install
 
-Post setup
-----------
-
-If you see a stopwords error, it means that you do not have the corpus
-`stopwords` downloaded from NLTK. You can download it using command below.
-
-.. code:: bash
-
-    python -c "import nltk; nltk.download('stopwords')"
-
 Quick Start
 -----------
 
@@ -91,6 +81,16 @@ can lead to what action, this part of the documentation is for you.
    :maxdepth: 2
 
    advanced
+
+Debugging Setup
+---------------
+
+If you see a stopwords error, it means that you do not have the corpus
+`stopwords` downloaded from NLTK. You can download it using command below.
+
+.. code:: bash
+
+    python -c "import nltk; nltk.download('stopwords')"
 
 References
 ----------

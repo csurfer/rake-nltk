@@ -54,10 +54,10 @@
 <li><a class="reference internal" href="#directly-from-the-repository">Directly from the repository</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#post-setup">Post setup</a></li>
 <li><a class="reference internal" href="#quick-start">Quick Start</a></li>
 <li><a class="reference internal" href="#api-reference">API Reference</a></li>
 <li><a class="reference internal" href="#user-guide">User guide</a></li>
+<li><a class="reference internal" href="#debugging-setup">Debugging Setup</a></li>
 <li><a class="reference internal" href="#references">References</a></li>
 <li><a class="reference internal" href="#why-i-chose-to-implement-it-myself">Why I chose to implement it myself?</a></li>
 <li><a class="reference internal" href="#contributing">Contributing</a><ul>
@@ -114,14 +114,6 @@ and its co-occurance with other words in the text.</p>
 </div>
 </div>
 </div>
-<div class="section" id="post-setup">
-<h2>Post setup<a class="headerlink" href="#post-setup" title="Permalink to this headline">¶</a></h2>
-<p>If you see a stopwords error, it means that you do not have the corpus
-<cite>stopwords</cite> downloaded from NLTK. You can download it using command below.</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;import nltk; nltk.download(&#39;stopwords&#39;)&quot;</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rake_nltk</span> <span class="k">import</span> <span class="n">Rake</span>
@@ -169,6 +161,14 @@ can lead to what action, this part of the documentation is for you.</p>
 </ul>
 </li>
 </ul>
+</div>
+</div>
+<div class="section" id="debugging-setup">
+<h2>Debugging Setup<a class="headerlink" href="#debugging-setup" title="Permalink to this headline">¶</a></h2>
+<p>If you see a stopwords error, it means that you do not have the corpus
+<cite>stopwords</cite> downloaded from NLTK. You can download it using command below.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;import nltk; nltk.download(&#39;stopwords&#39;)&quot;</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="references">
