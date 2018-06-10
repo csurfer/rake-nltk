@@ -31,12 +31,16 @@ class Rake(object):
         punctuations=None,
         language="english",
         ranking_metric=Metric.DEGREE_TO_FREQUENCY_RATIO,
+        max_length=100000,
+        min_length=1,
     ):
         """Constructor.
 
         :param stopwords: List of Words to be ignored for keyword extraction.
         :param punctuations: Punctuations to be ignored for keyword extraction.
         :param language: Language to be used for stopwords
+        :param max_length: Maximum limit of the number of words in a phrase
+        :param min_length: Minimum limit of the number of words in a phrase
         """
         # By default use degree to frequency ratio as the metric.
         if isinstance(ranking_metric, Metric):
@@ -56,6 +60,10 @@ class Rake(object):
 
         # All things which act as sentence breaks during keyword extraction.
         self.to_ignore = set(chain(self.stopwords, self.punctuations))
+
+        # Assign min or max length to the attributes
+        self.min_length = min_length
+        self.max_length = max_length
 
         # Stuff to be extracted from the provided text.
         self.frequency_dist = None
@@ -184,7 +192,8 @@ class Rake(object):
     def _get_phrase_list_from_words(self, word_list):
         """Method to create contender phrases from the list of words that form
         a sentence by dropping stopwords and punctuations and grouping the left
-        words into phrases. Ex:
+        words into phrases. Only phrases in the given range would be considered
+        to build co-occurrence matrix. Ex:
 
         Sentence: Red apples, are good in flavour.
         List of words: ['red', 'apples', ",", 'are', 'good', 'in', 'flavour']
@@ -192,10 +201,17 @@ class Rake(object):
         List of words: ['red', 'apples', *, *, good, *, 'flavour']
         List of phrases: [('red', 'apples'), ('good',), ('flavour',)]
 
+        List of phrases with a correct length:
+        For the range [1, 2]: [('red', 'apples'), ('good',), ('flavour',)]
+        For the range [1, 1]: [('good',), ('flavour',)]
+        For the range [2, 2]: [('red', 'apples')]
+
         :param word_list: List of words which form a sentence when joined in
                           the same order.
         :return: List of contender phrases that are formed after dropping
                  stopwords and punctuations.
         """
         groups = groupby(word_list, lambda x: x not in self.to_ignore)
-        return [tuple(group[1]) for group in groups if group[0]]
+        phrases = [tuple(group[1]) for group in groups if group[0]]
+        return list(filter(
+            lambda x: self.min_length <= len(x) <= self.max_length, phrases))
