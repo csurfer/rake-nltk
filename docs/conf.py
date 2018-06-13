@@ -109,6 +109,7 @@ html_sidebars = {
     '**': [
         'about.html',
         'localtoc.html',
+        'social.html',
         'searchbox.html',
     ]
 }
