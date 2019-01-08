@@ -13,11 +13,14 @@ with open(path.join(here, "README.rst")) as f:
 
 
 def _post_install():
-    """Post installation nltk corpus downloads."""
-    import nltk
+    try:
+        """Post installation nltk corpus downloads."""
+        import nltk
 
-    nltk.download("punkt")
-    nltk.download("stopwords")
+        nltk.download("punkt")
+        nltk.download("stopwords")
+    except:
+        pass
 
 
 class PostDevelop(develop):
