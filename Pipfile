@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 nltk = "*"
+pyyaml = "==4.2b1"
 
 [dev-packages]
 sphinx = "*"
