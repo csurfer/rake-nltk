@@ -53,7 +53,11 @@ class Rake(object):
         # If stopwords not provided we use language stopwords by default.
         self.stopwords = stopwords
         if self.stopwords is None:
-            self.stopwords = nltk.corpus.stopwords.words(language)
+            try:
+                self.stopwords = nltk.corpus.stopwords.words(language)
+            except LookupError:
+                nltk.download('stopwords')
+                self.stopwords = nltk.corpus.stopwords.words(language)
 
         # If punctuations are not provided we ignore all punctuation symbols.
         self.punctuations = punctuations
@@ -78,7 +82,11 @@ class Rake(object):
 
         :param text: Text to extract keywords from, provided as a string.
         """
-        sentences = nltk.tokenize.sent_tokenize(text)
+        try:
+            sentences = nltk.tokenize.sent_tokenize(text)
+        except LookupError:
+            nltk.download('punkt')
+            sentences = nltk.tokenize.sent_tokenize(text)
         self.extract_keywords_from_sentences(sentences)
 
     def extract_keywords_from_sentences(self, sentences):
