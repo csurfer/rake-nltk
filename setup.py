@@ -12,30 +12,6 @@ with open(path.join(here, "README.rst")) as f:
     long_description = f.read()
 
 
-def _post_install():
-    """Post installation nltk corpus downloads."""
-    import nltk
-
-    nltk.download("punkt")
-    nltk.download("stopwords")
-
-
-class PostDevelop(develop):
-    """Post-installation for development mode."""
-
-    def run(self):
-        develop.run(self)
-        self.execute(_post_install, [], msg="Running post installation tasks")
-
-
-class PostInstall(install):
-    """Post-installation for production mode."""
-
-    def run(self):
-        install.run(self)
-        self.execute(_post_install, [], msg="Running post installation tasks")
-
-
 # Get package and author details.
 about = {}
 with open(path.join(here, "rake_nltk", "__version__.py")) as f:
@@ -77,6 +53,5 @@ setup(
         "Topic :: Software Development :: Build Tools",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    install_requires=["nltk"],
-    cmdclass={"develop": PostDevelop, "install": PostInstall},
+    install_requires=["nltk"]
 )
