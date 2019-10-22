@@ -48,9 +48,9 @@ class Rake(object):
 
         # By default use degree to frequency ratio as the metric.
         if isinstance(ranking_metric, Metric):
-            self.metric = ranking_metric
+            self.__metric = ranking_metric
         else:
-            self.metric = Metric.DEGREE_TO_FREQUENCY_RATIO
+            self.__metric = Metric.DEGREE_TO_FREQUENCY_RATIO
 
         # If stopwords not provided we use language stopwords by default.
         self.stopwords = stopwords
@@ -63,11 +63,10 @@ class Rake(object):
             self.punctuations = string.punctuation
 
         # All things which act as sentence breaks during keyword extraction.
-        self.to_ignore = set(chain(self.stopwords, self.punctuations))
+        self.__to_ignore = set(chain(self.stopwords, self.punctuations))
 
-        # Assign min or max length to the attributes
-        self.min_length = min_length
-        self.max_length = max_length
+        self.__min_length = min_length
+        self.__max_length = max_length
 
         # Stuff to be extracted from the provided text.
         self.frequency_dist = None
@@ -89,6 +88,14 @@ class Rake(object):
         self.text = text
         sentences = nltk.tokenize.sent_tokenize(text)
         self._extract_keywords_from_sentences(sentences)
+
+    def set_stopwords(self, stopwords):
+        self.stopwords = stopwords
+        self.set_text(self.text)
+
+    def set_punctuations(self, punctuations):
+        self.punctuations = punctuations
+        self.set_text(self.text)
 
     def _extract_keywords_from_sentences(self, sentences):
         """Method to extract keywords from the list of sentences provided.
@@ -142,9 +149,9 @@ class Rake(object):
         for phrase in phrase_list:
             rank = 0.0
             for word in phrase:
-                if self.metric == Metric.DEGREE_TO_FREQUENCY_RATIO:
+                if self.__metric == Metric.DEGREE_TO_FREQUENCY_RATIO:
                     rank += 1.0 * self.word_degrees[word] / self.frequency_dist[word]
-                elif self.metric == Metric.WORD_DEGREE:
+                elif self.__metric == Metric.WORD_DEGREE:
                     rank += 1.0 * self.word_degrees[word]
                 else:
                     rank += 1.0 * self.frequency_dist[word]
@@ -190,10 +197,10 @@ class Rake(object):
         :return: List of contender phrases that are formed after dropping
                  stopwords and punctuations.
         """
-        groups = groupby(word_list, lambda x: x not in self.to_ignore)
+        groups = groupby(word_list, lambda x: x not in self.__to_ignore)
         phrases = [tuple(group[1]) for group in groups if group[0]]
         return list(
             filter(
-                lambda x: self.min_length <= len(x) <= self.max_length, phrases
+                lambda x: self.__min_length <= len(x) <= self.__max_length, phrases
             )
         )
