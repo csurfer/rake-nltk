@@ -27,6 +27,7 @@ class Rake(object):
 
     def __init__(
         self,
+        text,
         stopwords=None,
         punctuations=None,
         language="english",
@@ -44,6 +45,7 @@ class Rake(object):
         :param min_length: Minimum limit on the number of words in a phrase
                            (Inclusive. Defaults to 1)
         """
+
         # By default use degree to frequency ratio as the metric.
         if isinstance(ranking_metric, Metric):
             self.metric = ranking_metric
@@ -69,19 +71,26 @@ class Rake(object):
 
         # Stuff to be extracted from the provided text.
         self.frequency_dist = None
-        self.degree = None
+        self.word_degrees = None
         self.rank_list = None
         self.ranked_phrases = None
 
-    def extract_keywords_from_text(self, text):
-        """Method to extract keywords from the text provided.
+        # Initializing the text and building all the fields
+        self.set_text(text)
 
-        :param text: Text to extract keywords from, provided as a string.
-        """
+        # You don't need all of the getter methods, you just need to call these fields off the Rake object
+        # Fields to call:
+        # - self.ranked_phrases
+        # - self.rank_list
+        # - self.frequency_dist
+        # - self.word_degrees
+
+    def set_text(self, text):
+        self.text = text
         sentences = nltk.tokenize.sent_tokenize(text)
-        self.extract_keywords_from_sentences(sentences)
+        self._extract_keywords_from_sentences(sentences)
 
-    def extract_keywords_from_sentences(self, sentences):
+    def _extract_keywords_from_sentences(self, sentences):
         """Method to extract keywords from the list of sentences provided.
 
         :param sentences: Text to extraxt keywords from, provided as a list
@@ -91,38 +100,6 @@ class Rake(object):
         self._build_frequency_dist(phrase_list)
         self._build_word_co_occurance_graph(phrase_list)
         self._build_ranklist(phrase_list)
-
-    def get_ranked_phrases(self):
-        """Method to fetch ranked keyword strings.
-
-        :return: List of strings where each string represents an extracted
-                 keyword string.
-        """
-        return self.ranked_phrases
-
-    def get_ranked_phrases_with_scores(self):
-        """Method to fetch ranked keyword strings along with their scores.
-
-        :return: List of tuples where each tuple is formed of an extracted
-                 keyword string and its score. Ex: (5.68, 'Four Scoures')
-        """
-        return self.rank_list
-
-    def get_word_frequency_distribution(self):
-        """Method to fetch the word frequency distribution in the given text.
-
-        :return: Dictionary (defaultdict) of the format `word -> frequency`.
-        """
-        return self.frequency_dist
-
-    def get_word_degrees(self):
-        """Method to fetch the degree of words in the given text. Degree can be
-        defined as sum of co-occurances of the word with other words in the
-        given text.
-
-        :return: Dictionary (defaultdict) of the format `word -> degree`.
-        """
-        return self.degree
 
     def _build_frequency_dist(self, phrase_list):
         """Builds frequency distribution of the words in the given body of text.
@@ -148,9 +125,9 @@ class Rake(object):
             # use in other creative ways if required later.
             for (word, coword) in product(phrase, phrase):
                 co_occurance_graph[word][coword] += 1
-        self.degree = defaultdict(lambda: 0)
+        self.word_degrees = defaultdict(lambda: 0)
         for key in co_occurance_graph:
-            self.degree[key] = sum(co_occurance_graph[key].values())
+            self.word_degrees[key] = sum(co_occurance_graph[key].values())
 
     def _build_ranklist(self, phrase_list):
         """Method to rank each contender phrase using the formula
@@ -166,9 +143,9 @@ class Rake(object):
             rank = 0.0
             for word in phrase:
                 if self.metric == Metric.DEGREE_TO_FREQUENCY_RATIO:
-                    rank += 1.0 * self.degree[word] / self.frequency_dist[word]
+                    rank += 1.0 * self.word_degrees[word] / self.frequency_dist[word]
                 elif self.metric == Metric.WORD_DEGREE:
-                    rank += 1.0 * self.degree[word]
+                    rank += 1.0 * self.word_degrees[word]
                 else:
                     rank += 1.0 * self.frequency_dist[word]
             self.rank_list.append((rank, " ".join(phrase)))
