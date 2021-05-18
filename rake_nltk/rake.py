@@ -100,13 +100,13 @@ class Rake(object):
         """
         return self.ranked_phrases
 
-    def get_ranked_phrases_with_scores(self):
+    def get_ranked_phrases_with_scores(self, max):
         """Method to fetch ranked keyword strings along with their scores.
 
         :return: List of tuples where each tuple is formed of an extracted
                  keyword string and its score. Ex: (5.68, 'Four Scoures')
         """
-        return self.rank_list
+        return self.rank_list[0:max]
 
     def get_word_frequency_distribution(self):
         """Method to fetch the word frequency distribution in the given text.
