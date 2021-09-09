@@ -7,10 +7,10 @@ documents` by Stuart Rose, Dave Engel, Nick Cramer and Wendy Cowley.
 
 import string
 from collections import Counter, defaultdict
+from enum import Enum
 from itertools import chain, groupby, product
 
 import nltk
-from enum import Enum
 from nltk.tokenize import wordpunct_tokenize
 
 
@@ -29,7 +29,7 @@ class Rake(object):
         self,
         stopwords=None,
         punctuations=None,
-        language="english",
+        language='english',
         ranking_metric=Metric.DEGREE_TO_FREQUENCY_RATIO,
         max_length=100000,
         min_length=1,
@@ -171,7 +171,7 @@ class Rake(object):
                     rank += 1.0 * self.degree[word]
                 else:
                     rank += 1.0 * self.frequency_dist[word]
-            self.rank_list.append((rank, " ".join(phrase)))
+            self.rank_list.append((rank, ' '.join(phrase)))
         self.rank_list.sort(reverse=True)
         self.ranked_phrases = [ph[1] for ph in self.rank_list]
 
@@ -215,8 +215,4 @@ class Rake(object):
         """
         groups = groupby(word_list, lambda x: x not in self.to_ignore)
         phrases = [tuple(group[1]) for group in groups if group[0]]
-        return list(
-            filter(
-                lambda x: self.min_length <= len(x) <= self.max_length, phrases
-            )
-        )
+        return list(filter(lambda x: self.min_length <= len(x) <= self.max_length, phrases))
