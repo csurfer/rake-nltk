@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>rake_nltk.rake &#8212; rake-nltk 1.0.4 documentation</title>
+    <title>rake_nltk.rake &#8212; rake-nltk 1.0.5 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
@@ -78,9 +78,15 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span><span class="p">,</span> <span class="n">defaultdict</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span><span class="p">,</span> <span class="n">groupby</span><span class="p">,</span> <span class="n">product</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">DefaultDict</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span> <span class="nn">nltk</span>
 <span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">wordpunct_tokenize</span>
+
+<span class="c1"># Readability type definitions.</span>
+<span class="n">Word</span> <span class="o">=</span> <span class="nb">str</span>
+<span class="n">Sentence</span> <span class="o">=</span> <span class="nb">str</span>
+<span class="n">Phrase</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="Metric"><a class="viewcode-back" href="../../api.html#rake_nltk.Metric">[docs]</a><span class="k">class</span> <span class="nc">Metric</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
@@ -91,27 +97,45 @@
     <span class="n">WORD_FREQUENCY</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Uses f(w) alone as the metric</span></div>
 
 
-<div class="viewcode-block" id="Rake"><a class="viewcode-back" href="../../api.html#rake_nltk.Rake">[docs]</a><span class="k">class</span> <span class="nc">Rake</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Rake"><a class="viewcode-back" href="../../api.html#rake_nltk.Rake">[docs]</a><span class="k">class</span> <span class="nc">Rake</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Rapid Automatic Keyword Extraction Algorithm.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">stopwords</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">punctuations</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">language</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">,</span>
-        <span class="n">ranking_metric</span><span class="o">=</span><span class="n">Metric</span><span class="o">.</span><span class="n">DEGREE_TO_FREQUENCY_RATIO</span><span class="p">,</span>
-        <span class="n">max_length</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span>
-        <span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">stopwords</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">punctuations</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;english&#39;</span><span class="p">,</span>
+        <span class="n">ranking_metric</span><span class="p">:</span> <span class="n">Metric</span> <span class="o">=</span> <span class="n">Metric</span><span class="o">.</span><span class="n">DEGREE_TO_FREQUENCY_RATIO</span><span class="p">,</span>
+        <span class="n">max_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">,</span>
+        <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">include_repeated_phrases</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Constructor.</span>
 
-<span class="sd">        :param stopwords: List of Words to be ignored for keyword extraction.</span>
+<span class="sd">        :param stopwords: Words to be ignored for keyword extraction.</span>
 <span class="sd">        :param punctuations: Punctuations to be ignored for keyword extraction.</span>
-<span class="sd">        :param language: Language to be used for stopwords</span>
+<span class="sd">        :param language: Language to be used for stopwords.</span>
 <span class="sd">        :param max_length: Maximum limit on the number of words in a phrase</span>
 <span class="sd">                           (Inclusive. Defaults to 100000)</span>
 <span class="sd">        :param min_length: Minimum limit on the number of words in a phrase</span>
 <span class="sd">                           (Inclusive. Defaults to 1)</span>
+<span class="sd">        :param include_repeated_phrases: If phrases repeat in phrase list consider</span>
+<span class="sd">                            them as is without dropping any phrases for future</span>
+<span class="sd">                            calculations. (Defaults to True) Ex: &quot;Magic systems is</span>
+<span class="sd">                            a company. Magic systems was founded by Raul&quot;.</span>
+
+<span class="sd">                            If repeated phrases are allowed phrase list would be</span>
+<span class="sd">                            [</span>
+<span class="sd">                                (magic, systems), (company,), (magic, systems),</span>
+<span class="sd">                                (founded,), (raul,)</span>
+<span class="sd">                            ]</span>
+
+<span class="sd">                            If they aren&#39;t allowed phrase list would be</span>
+<span class="sd">                            [</span>
+<span class="sd">                                (magic, systems), (company,),</span>
+<span class="sd">                                (founded,), (raul,)</span>
+<span class="sd">                            ]</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># By default use degree to frequency ratio as the metric.</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ranking_metric</span><span class="p">,</span> <span class="n">Metric</span><span class="p">):</span>
@@ -120,48 +144,55 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">Metric</span><span class="o">.</span><span class="n">DEGREE_TO_FREQUENCY_RATIO</span>
 
         <span class="c1"># If stopwords not provided we use language stopwords by default.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stopwords</span> <span class="o">=</span> <span class="n">stopwords</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopwords</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">stopwords</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">corpus</span><span class="o">.</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="n">language</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stopwords</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">stopwords</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stopwords</span> <span class="o">=</span> <span class="n">stopwords</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stopwords</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">nltk</span><span class="o">.</span><span class="n">corpus</span><span class="o">.</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="n">language</span><span class="p">))</span>
 
         <span class="c1"># If punctuations are not provided we ignore all punctuation symbols.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">punctuations</span> <span class="o">=</span> <span class="n">punctuations</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">punctuations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">punctuations</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">punctuations</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">punctuations</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">punctuations</span> <span class="o">=</span> <span class="n">punctuations</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">punctuations</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">)</span>
 
         <span class="c1"># All things which act as sentence breaks during keyword extraction.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">to_ignore</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">chain</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stopwords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">punctuations</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to_ignore</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">chain</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stopwords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">punctuations</span><span class="p">))</span>
 
         <span class="c1"># Assign min or max length to the attributes</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">min_length</span> <span class="o">=</span> <span class="n">min_length</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">max_length</span> <span class="o">=</span> <span class="n">max_length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">min_length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">max_length</span>
+
+        <span class="c1"># Whether we should include repeated phreases in the computation or not.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">include_repeated_phrases</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">include_repeated_phrases</span>
 
         <span class="c1"># Stuff to be extracted from the provided text.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">frequency_dist</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">degree</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rank_list</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ranked_phrases</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequency_dist</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Word</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">degree</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Word</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rank_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Sentence</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ranked_phrases</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Sentence</span><span class="p">]</span>
 
-<div class="viewcode-block" id="Rake.extract_keywords_from_text"><a class="viewcode-back" href="../../api.html#rake_nltk.Rake.extract_keywords_from_text">[docs]</a>    <span class="k">def</span> <span class="nf">extract_keywords_from_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<div class="viewcode-block" id="Rake.extract_keywords_from_text"><a class="viewcode-back" href="../../api.html#rake_nltk.Rake.extract_keywords_from_text">[docs]</a>    <span class="k">def</span> <span class="nf">extract_keywords_from_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method to extract keywords from the text provided.</span>
 
 <span class="sd">        :param text: Text to extract keywords from, provided as a string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">sentences</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">tokenize</span><span class="o">.</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">sentences</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Sentence</span><span class="p">]</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">tokenize</span><span class="o">.</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">extract_keywords_from_sentences</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Rake.extract_keywords_from_sentences"><a class="viewcode-back" href="../../api.html#rake_nltk.Rake.extract_keywords_from_sentences">[docs]</a>    <span class="k">def</span> <span class="nf">extract_keywords_from_sentences</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentences</span><span class="p">):</span>
+<div class="viewcode-block" id="Rake.extract_keywords_from_sentences"><a class="viewcode-back" href="../../api.html#rake_nltk.Rake.extract_keywords_from_sentences">[docs]</a>    <span class="k">def</span> <span class="nf">extract_keywords_from_sentences</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentences</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Sentence</span><span class="p">]):</span>
         <span class="sd">&quot;&quot;&quot;Method to extract keywords from the list of sentences provided.</span>
 
 <span class="sd">        :param sentences: Text to extraxt keywords from, provided as a list</span>
 <span class="sd">                          of strings, where each string is a sentence.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">phrase_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_phrases</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span>
+        <span class="n">phrase_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Phrase</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_phrases</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_build_frequency_dist</span><span class="p">(</span><span class="n">phrase_list</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_build_word_co_occurance_graph</span><span class="p">(</span><span class="n">phrase_list</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_build_ranklist</span><span class="p">(</span><span class="n">phrase_list</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Rake.get_ranked_phrases"><a class="viewcode-back" href="../../api.html#rake_nltk.Rake.get_ranked_phrases">[docs]</a>    <span class="k">def</span> <span class="nf">get_ranked_phrases</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Rake.get_ranked_phrases"><a class="viewcode-back" href="../../api.html#rake_nltk.Rake.get_ranked_phrases">[docs]</a>    <span class="k">def</span> <span class="nf">get_ranked_phrases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Sentence</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Method to fetch ranked keyword strings.</span>
 
 <span class="sd">        :return: List of strings where each string represents an extracted</span>
@@ -169,7 +200,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ranked_phrases</span></div>
 
-<div class="viewcode-block" id="Rake.get_ranked_phrases_with_scores"><a class="viewcode-back" href="../../api.html#rake_nltk.Rake.get_ranked_phrases_with_scores">[docs]</a>    <span class="k">def</span> <span class="nf">get_ranked_phrases_with_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Rake.get_ranked_phrases_with_scores"><a class="viewcode-back" href="../../api.html#rake_nltk.Rake.get_ranked_phrases_with_scores">[docs]</a>    <span class="k">def</span> <span class="nf">get_ranked_phrases_with_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">Sentence</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;Method to fetch ranked keyword strings along with their scores.</span>
 
 <span class="sd">        :return: List of tuples where each tuple is formed of an extracted</span>
@@ -177,14 +208,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rank_list</span></div>
 
-<div class="viewcode-block" id="Rake.get_word_frequency_distribution"><a class="viewcode-back" href="../../api.html#rake_nltk.Rake.get_word_frequency_distribution">[docs]</a>    <span class="k">def</span> <span class="nf">get_word_frequency_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Rake.get_word_frequency_distribution"><a class="viewcode-back" href="../../api.html#rake_nltk.Rake.get_word_frequency_distribution">[docs]</a>    <span class="k">def</span> <span class="nf">get_word_frequency_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Word</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Method to fetch the word frequency distribution in the given text.</span>
 
 <span class="sd">        :return: Dictionary (defaultdict) of the format `word -&gt; frequency`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequency_dist</span></div>
 
-<div class="viewcode-block" id="Rake.get_word_degrees"><a class="viewcode-back" href="../../api.html#rake_nltk.Rake.get_word_degrees">[docs]</a>    <span class="k">def</span> <span class="nf">get_word_degrees</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Rake.get_word_degrees"><a class="viewcode-back" href="../../api.html#rake_nltk.Rake.get_word_degrees">[docs]</a>    <span class="k">def</span> <span class="nf">get_word_degrees</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Word</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Method to fetch the degree of words in the given text. Degree can be</span>
 <span class="sd">        defined as sum of co-occurances of the word with other words in the</span>
 <span class="sd">        given text.</span>
@@ -193,7 +224,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">degree</span></div>
 
-    <span class="k">def</span> <span class="nf">_build_frequency_dist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase_list</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_build_frequency_dist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Phrase</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Builds frequency distribution of the words in the given body of text.</span>
 
 <span class="sd">        :param phrase_list: List of List of strings where each sublist is a</span>
@@ -201,14 +232,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frequency_dist</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">phrase_list</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">_build_word_co_occurance_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase_list</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_build_word_co_occurance_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Phrase</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Builds the co-occurance graph of words in the given body of text to</span>
 <span class="sd">        compute degree of each word.</span>
 
 <span class="sd">        :param phrase_list: List of List of strings where each sublist is a</span>
 <span class="sd">                            collection of words which form a contender phrase.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">co_occurance_graph</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">co_occurance_graph</span><span class="p">:</span> <span class="n">DefaultDict</span><span class="p">[</span><span class="n">Word</span><span class="p">,</span> <span class="n">DefaultDict</span><span class="p">[</span><span class="n">Word</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="mi">0</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">phrase</span> <span class="ow">in</span> <span class="n">phrase_list</span><span class="p">:</span>
             <span class="c1"># For each phrase in the phrase list, count co-occurances of the</span>
             <span class="c1"># word with other words in the phrase.</span>
@@ -221,11 +252,12 @@
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">co_occurance_graph</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">degree</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">co_occurance_graph</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
-    <span class="k">def</span> <span class="nf">_build_ranklist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase_list</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_build_ranklist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Phrase</span><span class="p">]):</span>
         <span class="sd">&quot;&quot;&quot;Method to rank each contender phrase using the formula</span>
 
 <span class="sd">              phrase_score = sum of scores of words in the phrase.</span>
-<span class="sd">              word_score = d(w)/f(w) where d is degree and f is frequency.</span>
+<span class="sd">              word_score = d(w) or f(w) or d(w)/f(w) where d is degree</span>
+<span class="sd">                           and f is frequency.</span>
 
 <span class="sd">        :param phrase_list: List of List of strings where each sublist is a</span>
 <span class="sd">                            collection of words which form a contender phrase.</span>
@@ -244,7 +276,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rank_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ranked_phrases</span> <span class="o">=</span> <span class="p">[</span><span class="n">ph</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">ph</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rank_list</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">_generate_phrases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentences</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_generate_phrases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentences</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Sentence</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Phrase</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Method to generate contender phrases given the sentences of the text</span>
 <span class="sd">        document.</span>
 
@@ -253,14 +285,28 @@
 <span class="sd">        :return: Set of string tuples where each tuple is a collection</span>
 <span class="sd">                 of words forming a contender phrase.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">phrase_list</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">phrase_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Phrase</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># Create contender phrases from sentences.</span>
         <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
-            <span class="n">word_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">wordpunct_tokenize</span><span class="p">(</span><span class="n">sentence</span><span class="p">)]</span>
-            <span class="n">phrase_list</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_phrase_list_from_words</span><span class="p">(</span><span class="n">word_list</span><span class="p">))</span>
+            <span class="n">word_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Word</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">wordpunct_tokenize</span><span class="p">(</span><span class="n">sentence</span><span class="p">)]</span>
+            <span class="n">phrase_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_phrase_list_from_words</span><span class="p">(</span><span class="n">word_list</span><span class="p">))</span>
+
+        <span class="c1"># Based on user&#39;s choice to include or not include repeated phrases</span>
+        <span class="c1"># we compute the phrase list and return it. If not including repeated</span>
+        <span class="c1"># phrases, we only include the first occurance of the phrase and drop</span>
+        <span class="c1"># the rest.</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">include_repeated_phrases</span><span class="p">:</span>
+            <span class="n">unique_phrase_tracker</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">Phrase</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="n">non_repeated_phrase_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Phrase</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">phrase</span> <span class="ow">in</span> <span class="n">phrase_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">phrase</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">unique_phrase_tracker</span><span class="p">:</span>
+                    <span class="n">unique_phrase_tracker</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span>
+                    <span class="n">non_repeated_phrase_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">non_repeated_phrase_list</span>
+
         <span class="k">return</span> <span class="n">phrase_list</span>
 
-    <span class="k">def</span> <span class="nf">_get_phrase_list_from_words</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word_list</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_phrase_list_from_words</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Word</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Phrase</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Method to create contender phrases from the list of words that form</span>
 <span class="sd">        a sentence by dropping stopwords and punctuations and grouping the left</span>
 <span class="sd">        words into phrases. Only phrases in the given length range (both limits</span>
@@ -279,11 +325,11 @@
 
 <span class="sd">        :param word_list: List of words which form a sentence when joined in</span>
 <span class="sd">                          the same order.</span>
-<span class="sd">        :return: List of contender phrases that are formed after dropping</span>
-<span class="sd">                 stopwords and punctuations.</span>
+<span class="sd">        :return: List of contender phrases honouring phrase length requirements</span>
+<span class="sd">                 that are formed after dropping stopwords and punctuations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">groups</span> <span class="o">=</span> <span class="n">groupby</span><span class="p">(</span><span class="n">word_list</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_ignore</span><span class="p">)</span>
-        <span class="n">phrases</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span> <span class="k">if</span> <span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">phrases</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Phrase</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span> <span class="k">if</span> <span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_length</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_length</span><span class="p">,</span> <span class="n">phrases</span><span class="p">))</span></div>
 </pre></div>
 

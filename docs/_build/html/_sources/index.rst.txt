@@ -10,7 +10,7 @@
 rake-nltk
 =========
 
-|pypiv| |pyv| |Licence| |Build Status| |Coverage Status| |Thanks|
+|pypiv| |pyv| |Licence| |Build Status| |Coverage Status|
 
 RAKE short for Rapid Automatic Keyword Extraction algorithm, is a domain
 independent keyword extraction algorithm which tries to determine key
@@ -149,16 +149,14 @@ If you found the utility helpful you can buy me a cup of coffee using
 .. _NLTK: http://www.nltk.org/
 .. _issue tracker: https://github.com/csurfer/rake-nltk/issues
 
-.. |Build Status| image:: https://travis-ci.org/csurfer/rake-nltk.svg?branch=master
-   :target: https://travis-ci.org/csurfer/rake-nltk
+.. |Build Status| image:: https://github.com/csurfer/rake-nltk/actions/workflows/pytest.yml/badge.svg
+   :target: https://github.com/csurfer/rake-nltk/actions
 .. |Licence| image:: https://img.shields.io/badge/license-MIT-blue.svg
    :target: https://raw.githubusercontent.com/csurfer/rake-nltk/master/LICENSE
-.. |Coverage Status| image:: https://coveralls.io/repos/github/csurfer/rake-nltk/badge.svg?branch=master
-   :target: https://coveralls.io/github/csurfer/rake-nltk?branch=master
+.. |Coverage Status| image:: https://codecov.io/gh/csurfer/rake-nltk/branch/master/graph/badge.svg?token=ghRhWVec9X
+   :target: https://codecov.io/gh/csurfer/rake-nltk
 .. |Demo| image:: http://i.imgur.com/wVOzU7y.gif
 .. |pypiv| image:: https://img.shields.io/pypi/v/rake-nltk.svg
    :target: https://pypi.python.org/pypi/rake-nltk
 .. |pyv| image:: https://img.shields.io/pypi/pyversions/rake-nltk.svg
    :target: https://pypi.python.org/pypi/rake-nltk
-.. |Thanks| image:: https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg
-   :target: https://saythanks.io/to/csurfer

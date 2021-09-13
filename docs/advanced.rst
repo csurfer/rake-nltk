@@ -72,3 +72,20 @@ ranking
     from rake_nltk import Rake
 
     r = Rake(min_length=2, max_length=4)
+
+to control whether or not to include repeated phrases in text
+-------------------------------------------------------------
+
+So that user can choose to include all phrases generated from text or to
+include phrases only once. Example: "Magic systems is a company. Magic systems
+was founded in a garage" has the phrase (magic, systems) occuring twice.
+
+.. code:: python
+
+    from rake_nltk import Rake
+
+    # To include all phrases even the repeated ones.
+    r = Rake() # Equivalent to Rake(include_repeated_phrases=True)
+
+    # To include all phrases only once and ignore the repetitions
+    r = Rake(include_repeated_phrases=False)

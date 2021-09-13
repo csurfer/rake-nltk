@@ -1,6 +1,13 @@
 Release History
 ===============
 
+v1.0.5
+------
+* Adding python typing for better/clear interfaces.
+* Found a bug in phrase list which was being returned as a set causing it to drop repeated
+phrases and consider only the first one. Provided control over this as a flag that Rake takes
+so that users can control the behaviour.
+
 v1.0.4
 ------
 * Adding support for min and max words (inclusive) limits for ranked phrases.
