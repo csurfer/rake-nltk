@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Usage Details &#8212; rake-nltk 1.0.4 documentation</title>
+    <title>Usage Details &#8212; rake-nltk 1.0.5 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
@@ -53,6 +53,7 @@
 <li><a class="reference internal" href="#to-provide-your-own-list-of-stop-words-and-punctuations">to provide your own list of stop words and punctuations</a></li>
 <li><a class="reference internal" href="#to-control-the-metric-for-ranking">to control the metric for ranking</a></li>
 <li><a class="reference internal" href="#to-control-the-max-or-min-words-in-a-phrase">to control the max or min words in a phrase</a></li>
+<li><a class="reference internal" href="#to-control-whether-or-not-to-include-repeated-phrases-in-text">to control whether or not to include repeated phrases in text</a></li>
 </ul>
 </li>
 </ul>
@@ -149,6 +150,21 @@ ranking</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rake_nltk</span> <span class="kn">import</span> <span class="n">Rake</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">Rake</span><span class="p">(</span><span class="n">min_length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="to-control-whether-or-not-to-include-repeated-phrases-in-text">
+<h2>to control whether or not to include repeated phrases in text<a class="headerlink" href="#to-control-whether-or-not-to-include-repeated-phrases-in-text" title="Permalink to this headline">¶</a></h2>
+<p>So that user can choose to include all phrases generated from text or to
+include phrases only once. Example: “Magic systems is a company. Magic systems
+was founded in a garage” has the phrase (magic, systems) occuring twice.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rake_nltk</span> <span class="kn">import</span> <span class="n">Rake</span>
+
+<span class="c1"># To include all phrases even the repeated ones.</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">Rake</span><span class="p">()</span> <span class="c1"># Equivalent to Rake(include_repeated_phrases=True)</span>
+
+<span class="c1"># To include all phrases only once and ignore the repetitions</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">Rake</span><span class="p">(</span><span class="n">include_repeated_phrases</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

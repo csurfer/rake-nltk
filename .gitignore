@@ -11,4 +11,5 @@ pip-selfcheck.json
 rake_nltk.egg-info/
 .tox/
 .coverage
+coverage.xml
 htmlcov/
