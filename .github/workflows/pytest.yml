@@ -24,7 +24,7 @@ jobs:
           pip install pre-commit
           pip install -r requirements.txt
           pip install tox pytest
-          python -c "import nltk; nltk.download('stopwords')"
+          python -c "import nltk; nltk.download('stopwords'); nltk.download('punkt')"
       - name: Lint with pre-commit
         run: pre-commit run --all-files
       - name: Testing on python ${{ matrix.python-version }} with tox
