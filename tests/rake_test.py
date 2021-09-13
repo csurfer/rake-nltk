@@ -57,7 +57,7 @@ def test_generate_phrases():
         + 'encampment of glowing houses and streets of volcanic deserts '
         + 'every fifteen seconds ',
     ]
-    phrase_list = {
+    phrase_list = [
         ('red', 'apples'),
         ('good',),
         ('flavour',),
@@ -75,12 +75,12 @@ def test_generate_phrases():
         ('system',),
         ('linear', 'diophantine', 'equations'),
         ('whose', 'gloomy', 'beams', 'transfigured'),
-        ('volcanic', 'deserts', 'every', 'fifteen', 'seconds'),
+        ('village',),
         ('lunar', 'encampment'),
         ('glowing', 'houses'),
-        ('village',),
         ('streets',),
-    }
+        ('volcanic', 'deserts', 'every', 'fifteen', 'seconds'),
+    ]
     assert r._generate_phrases(sentences) == phrase_list
 
 
@@ -97,19 +97,19 @@ def test_generate_phrases_with_length_limit():
 
     # Consider phrases which have minimum of 2 words and max of 4
     r = Rake(min_length=2, max_length=4)
-    phrase_list = {
+    phrase_list = [
         ('red', 'apples'),
         ('compact', 'representation'),
         ('linear', 'diophantine', 'equations'),
         ('whose', 'gloomy', 'beams', 'transfigured'),
         ('lunar', 'encampment'),
         ('glowing', 'houses'),
-    }
+    ]
     assert r._generate_phrases(sentences) == phrase_list
 
     # Consider phrases which have minimum of 5 words and max of 5
     r = Rake(min_length=5, max_length=5)
-    phrase_list = {('volcanic', 'deserts', 'every', 'fifteen', 'seconds')}
+    phrase_list = [('volcanic', 'deserts', 'every', 'fifteen', 'seconds')]
     assert r._generate_phrases(sentences) == phrase_list
 
 
@@ -182,14 +182,21 @@ def test_extract_keywords_from_text_degree_to_frequency_metric():
         'algorithms',
         'used',
         'systems',
+        'systems',
+        'systems',
+        'systems',
         'system',
         'solving',
         'solutions',
+        'solutions',
+        'solutions',
         'given',
+        'criteria',
         'criteria',
         'construction',
         'constructing',
         'components',
+        'compatibility',
         'compatibility',
     ]
     assert r.get_ranked_phrases() == ranked_phrases
@@ -213,20 +220,27 @@ def test_extract_keywords_from_text_word_degree_metric():
         'types',
         'corresponding algorithms',
         'upper bounds',
+        'systems',
+        'systems',
+        'systems',
+        'systems',
         'natural numbers',
+        'solutions',
+        'solutions',
+        'solutions',
         'considered',
         'algorithms',
+        'criteria',
+        'criteria',
+        'compatibility',
+        'compatibility',
         'used',
-        'systems',
         'system',
         'solving',
-        'solutions',
         'given',
-        'criteria',
         'construction',
         'constructing',
         'components',
-        'compatibility',
     ]
     assert r.get_ranked_phrases() == ranked_phrases
     assert [phrase for _, phrase in r.get_ranked_phrases_with_scores()] == ranked_phrases
@@ -240,30 +254,38 @@ def test_extract_keywords_from_text_word_frequency_metric():
         'minimal set',
         'minimal generating sets',
         'considered types',
+        'systems',
+        'systems',
+        'systems',
+        'systems',
         'mixed types',
         'linear diophantine equations',
         'types',
         'strict inequations',
+        'solutions',
+        'solutions',
+        'solutions',
         'set',
         'nonstrict inequations',
         'linear constraints',
         'corresponding algorithms',
         'upper bounds',
         'natural numbers',
+        'criteria',
+        'criteria',
         'considered',
+        'compatibility',
+        'compatibility',
         'algorithms',
         'used',
-        'systems',
         'system',
         'solving',
-        'solutions',
         'given',
-        'criteria',
         'construction',
         'constructing',
         'components',
-        'compatibility',
     ]
+
     assert r.get_ranked_phrases() == ranked_phrases
     assert [phrase for _, phrase in r.get_ranked_phrases_with_scores()] == ranked_phrases
 
@@ -276,3 +298,35 @@ def test_load_portuguese_stopwords():
 def test_rake_default_metric():
     r = Rake(ranking_metric=1)
     assert r.metric == Metric.DEGREE_TO_FREQUENCY_RATIO
+
+
+def test_allow_repeated_phrases():
+    sentences = ['Magic systems is a company.', 'Magic systems was built in a garage']
+    expected_phrase_list_with_repetitions = [
+        (
+            'magic',
+            'systems',
+        ),
+        ('company',),
+        ('magic', 'systems'),
+        ('built',),
+        ('garage',),
+    ]
+    expected_phrase_list_without_repetitions = [
+        (
+            'magic',
+            'systems',
+        ),
+        ('company',),
+        ('built',),
+        ('garage',),
+    ]
+
+    r = Rake()
+    assert r._generate_phrases(sentences) == expected_phrase_list_with_repetitions
+
+    r = Rake(include_repeated_phrases=True)
+    assert r._generate_phrases(sentences) == expected_phrase_list_with_repetitions
+
+    r = Rake(include_repeated_phrases=False)
+    assert r._generate_phrases(sentences) == expected_phrase_list_without_repetitions

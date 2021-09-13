@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from os import path
+from typing import Dict
 
 from setuptools import setup
 from setuptools.command.develop import develop
@@ -37,7 +38,7 @@ class PostInstall(install):
 
 
 # Get package and author details.
-about = {}
+about: Dict[str, str] = {}
 with open(path.join(here, 'rake_nltk', '__version__.py')) as f:
     exec(f.read(), about)
 
