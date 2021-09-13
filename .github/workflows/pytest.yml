@@ -11,8 +11,6 @@ jobs:
     strategy:
       matrix:
         python-version: [3.6, 3.7, 3.8, 3.9]
-    env:
-      CODECOV_TOKEN='5da5dab1-15b6-43bb-aa3c-4d191e422e16'
 
     steps:
       - uses: actions/checkout@v2
