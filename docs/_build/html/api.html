@@ -1,18 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Metric Object &#8212; rake-nltk 1.0.4 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Usage Details" href="advanced.html" />
@@ -47,7 +47,7 @@
 
 
 
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Metric Object</a></li>
 <li><a class="reference internal" href="#rake-object">Rake Object</a></li>
@@ -58,149 +58,132 @@
 
 <p><a href="https://twitter.com/sharmavishwas7" class="twitter-follow-button" data-show-count="false">Follow @sharmavishwas7</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></p>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <span class="target" id="module-rake_nltk"></span><p>This part of the documentation covers all the interfaces of rake_nltk.</p>
-<div class="section" id="metric-object">
+<section id="metric-object">
 <h1>Metric Object<a class="headerlink" href="#metric-object" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="rake_nltk.Metric">
-<em class="property">class </em><code class="descclassname">rake_nltk.</code><code class="descname">Metric</code><a class="reference internal" href="_modules/rake_nltk/rake.html#Metric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rake_nltk.Metric" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="rake_nltk.Metric">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">rake_nltk.</span></span><span class="sig-name descname"><span class="pre">Metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rake_nltk/rake.html#Metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rake_nltk.Metric" title="Permalink to this definition">¶</a></dt>
 <dd><p>Different metrics that can be used for ranking.</p>
-<dl class="attribute">
-<dt id="rake_nltk.Metric.DEGREE_TO_FREQUENCY_RATIO">
-<code class="descname">DEGREE_TO_FREQUENCY_RATIO</code><em class="property"> = 0</em><a class="headerlink" href="#rake_nltk.Metric.DEGREE_TO_FREQUENCY_RATIO" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rake_nltk.Metric.DEGREE_TO_FREQUENCY_RATIO">
+<span class="sig-name descname"><span class="pre">DEGREE_TO_FREQUENCY_RATIO</span></span><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#rake_nltk.Metric.DEGREE_TO_FREQUENCY_RATIO" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
-<dt id="rake_nltk.Metric.WORD_DEGREE">
-<code class="descname">WORD_DEGREE</code><em class="property"> = 1</em><a class="headerlink" href="#rake_nltk.Metric.WORD_DEGREE" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rake_nltk.Metric.WORD_DEGREE">
+<span class="sig-name descname"><span class="pre">WORD_DEGREE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#rake_nltk.Metric.WORD_DEGREE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
-<dt id="rake_nltk.Metric.WORD_FREQUENCY">
-<code class="descname">WORD_FREQUENCY</code><em class="property"> = 2</em><a class="headerlink" href="#rake_nltk.Metric.WORD_FREQUENCY" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rake_nltk.Metric.WORD_FREQUENCY">
+<span class="sig-name descname"><span class="pre">WORD_FREQUENCY</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#rake_nltk.Metric.WORD_FREQUENCY" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="rake-object">
+</section>
+<section id="rake-object">
 <h1>Rake Object<a class="headerlink" href="#rake-object" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="rake_nltk.Rake">
-<em class="property">class </em><code class="descclassname">rake_nltk.</code><code class="descname">Rake</code><span class="sig-paren">(</span><em>stopwords=None</em>, <em>punctuations=None</em>, <em>language='english'</em>, <em>ranking_metric=&lt;Metric.DEGREE_TO_FREQUENCY_RATIO: 0&gt;</em>, <em>max_length=100000</em>, <em>min_length=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rake_nltk/rake.html#Rake"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rake_nltk.Rake" title="Permalink to this definition">¶</a></dt>
+<dl class="py class">
+<dt class="sig sig-object py" id="rake_nltk.Rake">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">rake_nltk.</span></span><span class="sig-name descname"><span class="pre">Rake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stopwords</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">punctuations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'english'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranking_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Metric.DEGREE_TO_FREQUENCY_RATIO</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rake_nltk/rake.html#Rake"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rake_nltk.Rake" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rapid Automatic Keyword Extraction Algorithm.</p>
-<dl class="method">
-<dt id="rake_nltk.Rake.extract_keywords_from_sentences">
-<code class="descname">extract_keywords_from_sentences</code><span class="sig-paren">(</span><em>sentences</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rake_nltk/rake.html#Rake.extract_keywords_from_sentences"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rake_nltk.Rake.extract_keywords_from_sentences" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="rake_nltk.Rake.extract_keywords_from_sentences">
+<span class="sig-name descname"><span class="pre">extract_keywords_from_sentences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sentences</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rake_nltk/rake.html#Rake.extract_keywords_from_sentences"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rake_nltk.Rake.extract_keywords_from_sentences" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to extract keywords from the list of sentences provided.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sentences</strong> – Text to extraxt keywords from, provided as a list
-of strings, where each string is a sentence.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sentences</strong> – Text to extraxt keywords from, provided as a list
+of strings, where each string is a sentence.</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="rake_nltk.Rake.extract_keywords_from_text">
-<code class="descname">extract_keywords_from_text</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rake_nltk/rake.html#Rake.extract_keywords_from_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rake_nltk.Rake.extract_keywords_from_text" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="rake_nltk.Rake.extract_keywords_from_text">
+<span class="sig-name descname"><span class="pre">extract_keywords_from_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rake_nltk/rake.html#Rake.extract_keywords_from_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rake_nltk.Rake.extract_keywords_from_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to extract keywords from the text provided.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> – Text to extract keywords from, provided as a string.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text</strong> – Text to extract keywords from, provided as a string.</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="rake_nltk.Rake.get_ranked_phrases">
-<code class="descname">get_ranked_phrases</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rake_nltk/rake.html#Rake.get_ranked_phrases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rake_nltk.Rake.get_ranked_phrases" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="rake_nltk.Rake.get_ranked_phrases">
+<span class="sig-name descname"><span class="pre">get_ranked_phrases</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rake_nltk/rake.html#Rake.get_ranked_phrases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rake_nltk.Rake.get_ranked_phrases" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to fetch ranked keyword strings.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of strings where each string represents an extracted
-keyword string.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of strings where each string represents an extracted
+keyword string.</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="rake_nltk.Rake.get_ranked_phrases_with_scores">
-<code class="descname">get_ranked_phrases_with_scores</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rake_nltk/rake.html#Rake.get_ranked_phrases_with_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rake_nltk.Rake.get_ranked_phrases_with_scores" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="rake_nltk.Rake.get_ranked_phrases_with_scores">
+<span class="sig-name descname"><span class="pre">get_ranked_phrases_with_scores</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rake_nltk/rake.html#Rake.get_ranked_phrases_with_scores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rake_nltk.Rake.get_ranked_phrases_with_scores" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to fetch ranked keyword strings along with their scores.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of tuples where each tuple is formed of an extracted
-keyword string and its score. Ex: (5.68, ‘Four Scoures’)</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of tuples where each tuple is formed of an extracted
+keyword string and its score. Ex: (5.68, ‘Four Scoures’)</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="rake_nltk.Rake.get_word_degrees">
-<code class="descname">get_word_degrees</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rake_nltk/rake.html#Rake.get_word_degrees"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rake_nltk.Rake.get_word_degrees" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="rake_nltk.Rake.get_word_degrees">
+<span class="sig-name descname"><span class="pre">get_word_degrees</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rake_nltk/rake.html#Rake.get_word_degrees"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rake_nltk.Rake.get_word_degrees" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to fetch the degree of words in the given text. Degree can be
 defined as sum of co-occurances of the word with other words in the
 given text.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dictionary (defaultdict) of the format <cite>word -&gt; degree</cite>.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Dictionary (defaultdict) of the format <cite>word -&gt; degree</cite>.</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="rake_nltk.Rake.get_word_frequency_distribution">
-<code class="descname">get_word_frequency_distribution</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rake_nltk/rake.html#Rake.get_word_frequency_distribution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rake_nltk.Rake.get_word_frequency_distribution" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="rake_nltk.Rake.get_word_frequency_distribution">
+<span class="sig-name descname"><span class="pre">get_word_frequency_distribution</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rake_nltk/rake.html#Rake.get_word_frequency_distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rake_nltk.Rake.get_word_frequency_distribution" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to fetch the word frequency distribution in the given text.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dictionary (defaultdict) of the format <cite>word -&gt; frequency</cite>.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Dictionary (defaultdict) of the format <cite>word -&gt; frequency</cite>.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
-</div>
+</section>
 
 
           </div>
+          
         </div>
       </div>
     <div class="clearer"></div>
@@ -209,8 +192,8 @@ given text.</p>
       &copy;2018, Vishwas B Sharma.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="_sources/api.rst.txt"

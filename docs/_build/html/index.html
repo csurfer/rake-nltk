@@ -1,18 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>rake-nltk &#8212; rake-nltk 1.0.4 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Metric Object" href="api.html" />
@@ -46,7 +46,7 @@
 
 
 
-  <h3><a href="#">Table Of Contents</a></h3>
+  <h3><a href="#">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">rake-nltk</a><ul>
 <li><a class="reference internal" href="#setup">Setup</a><ul>
@@ -75,26 +75,26 @@
 
 <p><a href="https://twitter.com/sharmavishwas7" class="twitter-follow-button" data-show-count="false">Follow @sharmavishwas7</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></p>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="toctree-wrapper compound">
 </div>
-<div class="section" id="rake-nltk">
+<section id="rake-nltk">
 <h1>rake-nltk<a class="headerlink" href="#rake-nltk" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://pypi.python.org/pypi/rake-nltk"><img alt="pypiv" src="https://img.shields.io/pypi/v/rake-nltk.svg" /></a> <a class="reference external" href="https://pypi.python.org/pypi/rake-nltk"><img alt="pyv" src="https://img.shields.io/pypi/pyversions/rake-nltk.svg" /></a> <a class="reference external" href="https://raw.githubusercontent.com/csurfer/rake-nltk/master/LICENSE"><img alt="Licence" src="https://img.shields.io/badge/license-MIT-blue.svg" /></a> <a class="reference external" href="https://travis-ci.org/csurfer/rake-nltk"><img alt="Build Status" src="https://travis-ci.org/csurfer/rake-nltk.svg?branch=master" /></a> <a class="reference external" href="https://coveralls.io/github/csurfer/rake-nltk?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/csurfer/rake-nltk/badge.svg?branch=master" /></a> <a class="reference external" href="https://saythanks.io/to/csurfer"><img alt="Thanks" src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg" /></a></p>
 <p>RAKE short for Rapid Automatic Keyword Extraction algorithm, is a domain
@@ -102,25 +102,25 @@ independent keyword extraction algorithm which tries to determine key
 phrases in a body of text by analyzing the frequency of word appearance
 and its co-occurance with other words in the text.</p>
 <p><img alt="Demo" src="http://i.imgur.com/wVOzU7y.gif" /></p>
-<div class="section" id="setup">
+<section id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="using-pip">
+<section id="using-pip">
 <h3>Using pip<a class="headerlink" href="#using-pip" title="Permalink to this headline">¶</a></h3>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">rake</span><span class="o">-</span><span class="n">nltk</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install rake-nltk
 </pre></div>
 </div>
-</div>
-<div class="section" id="directly-from-the-repository">
+</section>
+<section id="directly-from-the-repository">
 <h3>Directly from the repository<a class="headerlink" href="#directly-from-the-repository" title="Permalink to this headline">¶</a></h3>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">csurfer</span><span class="o">/</span><span class="n">rake</span><span class="o">-</span><span class="n">nltk</span><span class="o">.</span><span class="n">git</span>
-<span class="n">python</span> <span class="n">rake</span><span class="o">-</span><span class="n">nltk</span><span class="o">/</span><span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/csurfer/rake-nltk.git
+python rake-nltk/setup.py install
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="quick-start">
+</section>
+</section>
+<section id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rake_nltk</span> <span class="k">import</span> <span class="n">Rake</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rake_nltk</span> <span class="kn">import</span> <span class="n">Rake</span>
 
 <span class="c1"># Uses stopwords for english from NLTK, and all puntuation characters by</span>
 <span class="c1"># default</span>
@@ -139,8 +139,8 @@ and its co-occurance with other words in the text.</p>
 <span class="n">r</span><span class="o">.</span><span class="n">get_ranked_phrases_with_scores</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="api-reference">
+</section>
+<section id="api-reference">
 <h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
 <p>If you are looking for information on a specific function, class or
 method, this part of the documentation is for you.</p>
@@ -150,8 +150,8 @@ method, this part of the documentation is for you.</p>
 <li class="toctree-l1"><a class="reference internal" href="api.html#rake-object">Rake Object</a></li>
 </ul>
 </div>
-</div>
-<div class="section" id="user-guide">
+</section>
+<section id="user-guide">
 <h2>User guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h2>
 <p>If you are looking for general information on choices you have and what choice
 can lead to what action, this part of the documentation is for you.</p>
@@ -166,54 +166,66 @@ can lead to what action, this part of the documentation is for you.</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="debugging-setup">
+</section>
+<section id="debugging-setup">
 <h2>Debugging Setup<a class="headerlink" href="#debugging-setup" title="Permalink to this headline">¶</a></h2>
 <p>If you see a stopwords error, it means that you do not have the corpus
 <cite>stopwords</cite> downloaded from NLTK. You can download it using command below.</p>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;import nltk; nltk.download(&#39;stopwords&#39;)&quot;</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -c <span class="s2">&quot;import nltk; nltk.download(&#39;stopwords&#39;)&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="references">
+</section>
+<section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 <p>This is a python implementation of the algorithm as mentioned in paper
 <a class="reference external" href="https://www.researchgate.net/profile/Stuart_Rose/publication/227988510_Automatic_Keyword_Extraction_from_Individual_Documents/links/55071c570cf27e990e04c8bb.pdf">Automatic keyword extraction from individual documents by Stuart Rose,
 Dave Engel, Nick Cramer and Wendy Cowley</a></p>
-</div>
-<div class="section" id="why-i-chose-to-implement-it-myself">
+</section>
+<section id="why-i-chose-to-implement-it-myself">
 <h2>Why I chose to implement it myself?<a class="headerlink" href="#why-i-chose-to-implement-it-myself" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>It is extremely fun to implement algorithms by reading papers. It is
-the digital equivalent of DIY kits.</li>
-<li>There are some rather popular implementations out there, in python(<a class="reference external" href="https://github.com/aneesha/RAKE">aneesha/RAKE</a>) and
+<li><p>It is extremely fun to implement algorithms by reading papers. It is
+the digital equivalent of DIY kits.</p></li>
+<li><p>There are some rather popular implementations out there, in python(<a class="reference external" href="https://github.com/aneesha/RAKE">aneesha/RAKE</a>) and
 node(<a class="reference external" href="https://github.com/waseem18/node-rake">waseem18/node-rake</a>) but neither seemed to use the power of <a class="reference external" href="http://www.nltk.org/">NLTK</a>. By making NLTK
 an integral part of the implementation I get the flexibility and power to extend it in other
-creative ways, if I see fit later, without having to implement everything myself.</li>
-<li>I plan to use it in my other pet projects to come and wanted it to be
-modular and tunable and this way I have complete control.</li>
+creative ways, if I see fit later, without having to implement everything myself.</p></li>
+<li><p>I plan to use it in my other pet projects to come and wanted it to be
+modular and tunable and this way I have complete control.</p></li>
 </ul>
-</div>
-<div class="section" id="contributing">
+</section>
+<section id="contributing">
 <h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="bug-reports-and-feature-requests">
+<section id="bug-reports-and-feature-requests">
 <h3>Bug Reports and Feature Requests<a class="headerlink" href="#bug-reports-and-feature-requests" title="Permalink to this headline">¶</a></h3>
 <p>Please use <a class="reference external" href="https://github.com/csurfer/rake-nltk/issues">issue tracker</a> for reporting bugs or feature requests.</p>
-</div>
-<div class="section" id="development">
+</section>
+<section id="development">
 <h3>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h3>
-<p>Pull requests are most welcome.</p>
-</div>
-<div class="section" id="buy-the-developer-a-cup-of-coffee">
+<ol class="arabic simple">
+<li><p>Checkout the repository.</p></li>
+<li><p>Make your changes and add/update relavent tests.</p></li>
+<li><p>Install <strong>`poetry`</strong> using <strong>`pip install poetry`</strong>.</p></li>
+<li><p>Run <strong>`poetry install`</strong> to create project’s virtual environment.</p></li>
+<li><p>Run tests using <strong>`poetry run tox`</strong> (Any python versions which you don’t have checked out will fail this). Fix failing tests and repeat.</p></li>
+<li><p>Make documentation changes that are relavant.</p></li>
+<li><p>Install <strong>`pre-commit`</strong> using <strong>`pip install pre-commit`</strong> and run <strong>`pre-commit run –all-files`</strong> to do lint checks.</p></li>
+<li><p>Generate documentation using <strong>`poetry run sphinx-build -b html docs/ docs/_build/html`</strong>.</p></li>
+<li><p>Generate <strong>`requirements.txt`</strong> for automated testing using <strong>`poetry export –dev –without-hashes -f requirements.txt &gt; requirements.txt`</strong>.</p></li>
+<li><p>Commit the changes and raise a pull request.</p></li>
+</ol>
+</section>
+<section id="buy-the-developer-a-cup-of-coffee">
 <h3>Buy the developer a cup of coffee!<a class="headerlink" href="#buy-the-developer-a-cup-of-coffee" title="Permalink to this headline">¶</a></h3>
 <p>If you found the utility helpful you can buy me a cup of coffee using</p>
 <p><a class="reference external" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=3BSBW7D45C4YN&amp;lc=US&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted"><img alt="Donate" src="https://www.paypalobjects.com/webstatic/en_US/i/btn/png/silver-pill-paypal-44px.png" /></a></p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
           </div>
+          
         </div>
       </div>
     <div class="clearer"></div>
@@ -222,8 +234,8 @@ modular and tunable and this way I have complete control.</li>
       &copy;2018, Vishwas B Sharma.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="_sources/index.rst.txt"

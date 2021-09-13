@@ -1,18 +1,18 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Usage Details &#8212; rake-nltk 1.0.4 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Metric Object" href="api.html" />
@@ -46,7 +46,7 @@
 
 
 
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Usage Details</a><ul>
 <li><a class="reference internal" href="#to-use-it-with-a-specific-language-supported-by-nltk">to use it with a specific language supported by nltk.</a></li>
@@ -62,61 +62,60 @@
 
 <p><a href="https://twitter.com/sharmavishwas7" class="twitter-follow-button" data-show-count="false">Follow @sharmavishwas7</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></p>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
-  <div class="section" id="usage-details">
+  <section id="usage-details">
 <h1>Usage Details<a class="headerlink" href="#usage-details" title="Permalink to this headline">¶</a></h1>
 <p>Rake object accepts the following as the constructor parameters, by varying
 which this implementation of Rake algorithm can be used for several different
 purposes.</p>
 <ul class="simple">
-<li>stopwords : List of words which are considered to break sentences into
-phrases. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
-<li>punctuations : List of punctuations which are considered to break sentences
-into phrases. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
-<li>language : Language to use for tokenization and stopwords. Defaults to
-<code class="docutils literal notranslate"><span class="pre">english</span></code>.</li>
-<li><dl class="first docutils">
-<dt>ranking_metric <span class="classifier-delimiter">:</span> <span class="classifier">Metric to use for ranking of metrics</span></dt>
-<dd><ul class="first last">
-<li>Ratio of degree of word to its frequency d(w)/f(w). (Default)</li>
-<li>Degree of word only.</li>
-<li>Frequency of word only.</li>
+<li><p>stopwords : List of words which are considered to break sentences into
+phrases. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p>punctuations : List of punctuations which are considered to break sentences
+into phrases. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p>language : Language to use for tokenization and stopwords. Defaults to
+<code class="docutils literal notranslate"><span class="pre">english</span></code>.</p></li>
+<li><dl class="simple">
+<dt>ranking_metric<span class="classifier">Metric to use for ranking of metrics</span></dt><dd><ul>
+<li><p>Ratio of degree of word to its frequency d(w)/f(w). (Default)</p></li>
+<li><p>Degree of word only.</p></li>
+<li><p>Frequency of word only.</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li>max_length : Of phrases to consider. Defaults to <code class="docutils literal notranslate"><span class="pre">100000</span></code>.</li>
-<li>min_length : Of phrases to consider. Defaults to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</li>
+<li><p>max_length : Of phrases to consider. Defaults to <code class="docutils literal notranslate"><span class="pre">100000</span></code>.</p></li>
+<li><p>min_length : Of phrases to consider. Defaults to <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p></li>
 </ul>
-<div class="section" id="to-use-it-with-a-specific-language-supported-by-nltk">
+<section id="to-use-it-with-a-specific-language-supported-by-nltk">
 <h2>to use it with a specific language supported by nltk.<a class="headerlink" href="#to-use-it-with-a-specific-language-supported-by-nltk" title="Permalink to this headline">¶</a></h2>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rake_nltk</span> <span class="k">import</span> <span class="n">Rake</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rake_nltk</span> <span class="kn">import</span> <span class="n">Rake</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">Rake</span><span class="p">(</span><span class="n">language</span><span class="o">=&lt;</span><span class="n">language</span><span class="o">&gt;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Implementation automatically picks up the <code class="docutils literal notranslate"><span class="pre">stopwords</span></code> for that language and
 default <code class="docutils literal notranslate"><span class="pre">punctuation</span></code> set.</p>
-</div>
-<div class="section" id="to-provide-your-own-list-of-stop-words-and-punctuations">
+</section>
+<section id="to-provide-your-own-list-of-stop-words-and-punctuations">
 <h2>to provide your own list of stop words and punctuations<a class="headerlink" href="#to-provide-your-own-list-of-stop-words-and-punctuations" title="Permalink to this headline">¶</a></h2>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rake_nltk</span> <span class="k">import</span> <span class="n">Rake</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rake_nltk</span> <span class="kn">import</span> <span class="n">Rake</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">Rake</span><span class="p">(</span>
     <span class="n">stopwords</span><span class="o">=&lt;</span><span class="nb">list</span> <span class="n">of</span> <span class="n">stopwords</span><span class="o">&gt;</span><span class="p">,</span>
@@ -124,10 +123,10 @@ default <code class="docutils literal notranslate"><span class="pre">punctuation
 <span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="to-control-the-metric-for-ranking">
+</section>
+<section id="to-control-the-metric-for-ranking">
 <h2>to control the metric for ranking<a class="headerlink" href="#to-control-the-metric-for-ranking" title="Permalink to this headline">¶</a></h2>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rake_nltk</span> <span class="k">import</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">Rake</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rake_nltk</span> <span class="kn">import</span> <span class="n">Metric</span><span class="p">,</span> <span class="n">Rake</span>
 
 <span class="c1"># Paper uses d(w)/f(w) as the final metric. You can use this API with the</span>
 <span class="c1"># following metrics:</span>
@@ -142,21 +141,22 @@ default <code class="docutils literal notranslate"><span class="pre">punctuation
 <span class="n">r</span> <span class="o">=</span> <span class="n">Rake</span><span class="p">(</span><span class="n">ranking_metric</span><span class="o">=</span><span class="n">Metric</span><span class="o">.</span><span class="n">WORD_FREQUENCY</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="to-control-the-max-or-min-words-in-a-phrase">
+</section>
+<section id="to-control-the-max-or-min-words-in-a-phrase">
 <h2>to control the max or min words in a phrase<a class="headerlink" href="#to-control-the-max-or-min-words-in-a-phrase" title="Permalink to this headline">¶</a></h2>
 <p>So that only phrases of specific min and/or max lengthes are considered for
 ranking</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rake_nltk</span> <span class="k">import</span> <span class="n">Rake</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rake_nltk</span> <span class="kn">import</span> <span class="n">Rake</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">Rake</span><span class="p">(</span><span class="n">min_length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
+          
         </div>
       </div>
     <div class="clearer"></div>
@@ -165,8 +165,8 @@ ranking</p>
       &copy;2018, Vishwas B Sharma.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="_sources/advanced.rst.txt"
