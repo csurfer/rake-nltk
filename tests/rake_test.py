@@ -271,3 +271,8 @@ def test_extract_keywords_from_text_word_frequency_metric():
 def test_load_portuguese_stopwords():
     r = Rake(language='portuguese')
     assert r.stopwords is not None
+
+
+def test_rake_default_metric():
+    r = Rake(ranking_metric=1)
+    assert r.metric == Metric.DEGREE_TO_FREQUENCY_RATIO
