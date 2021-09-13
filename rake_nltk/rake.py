@@ -9,9 +9,15 @@ import string
 from collections import Counter, defaultdict
 from enum import Enum
 from itertools import chain, groupby, product
+from typing import DefaultDict, Dict, List, Optional, Set, Tuple
 
 import nltk
 from nltk.tokenize import wordpunct_tokenize
+
+# Readability type definitions.
+Word = str
+Sentence = str
+Phrase = Tuple[str, ...]
 
 
 class Metric(Enum):
@@ -22,27 +28,45 @@ class Metric(Enum):
     WORD_FREQUENCY = 2  # Uses f(w) alone as the metric
 
 
-class Rake(object):
+class Rake:
     """Rapid Automatic Keyword Extraction Algorithm."""
 
     def __init__(
         self,
-        stopwords=None,
-        punctuations=None,
-        language='english',
-        ranking_metric=Metric.DEGREE_TO_FREQUENCY_RATIO,
-        max_length=100000,
-        min_length=1,
+        stopwords: Optional[Set[str]] = None,
+        punctuations: Optional[Set[str]] = None,
+        language: str = 'english',
+        ranking_metric: Metric = Metric.DEGREE_TO_FREQUENCY_RATIO,
+        max_length: int = 100000,
+        min_length: int = 1,
+        include_repeated_phrases: bool = True,
     ):
         """Constructor.
 
-        :param stopwords: List of Words to be ignored for keyword extraction.
+        :param stopwords: Words to be ignored for keyword extraction.
         :param punctuations: Punctuations to be ignored for keyword extraction.
-        :param language: Language to be used for stopwords
+        :param language: Language to be used for stopwords.
         :param max_length: Maximum limit on the number of words in a phrase
                            (Inclusive. Defaults to 100000)
         :param min_length: Minimum limit on the number of words in a phrase
                            (Inclusive. Defaults to 1)
+        :param include_repeated_phrases: If phrases repeat in phrase list consider
+                            them as is without dropping any phrases for future
+                            calculations. (Defaults to True) Ex: "Magic systems is
+                            a company. Magic systems was founded by Raul".
+
+                            If repeated phrases are allowed phrase list would be
+                            [
+                                (magic, systems), (company,), (magic, systems),
+                                (founded,), (raul,)
+                            ]
+
+                            If they aren't allowed phrase list would be
+                            [
+                                (magic, systems), (company,),
+                                (founded,), (raul,)
+                            ]
+
         """
         # By default use degree to frequency ratio as the metric.
         if isinstance(ranking_metric, Metric):
@@ -51,48 +75,55 @@ class Rake(object):
             self.metric = Metric.DEGREE_TO_FREQUENCY_RATIO
 
         # If stopwords not provided we use language stopwords by default.
-        self.stopwords = stopwords
-        if self.stopwords is None:
-            self.stopwords = nltk.corpus.stopwords.words(language)
+        self.stopwords: Set[str]
+        if stopwords:
+            self.stopwords = stopwords
+        else:
+            self.stopwords = set(nltk.corpus.stopwords.words(language))
 
         # If punctuations are not provided we ignore all punctuation symbols.
-        self.punctuations = punctuations
-        if self.punctuations is None:
-            self.punctuations = string.punctuation
+        self.punctuations: Set[str]
+        if punctuations:
+            self.punctuations = punctuations
+        else:
+            self.punctuations = set(string.punctuation)
 
         # All things which act as sentence breaks during keyword extraction.
-        self.to_ignore = set(chain(self.stopwords, self.punctuations))
+        self.to_ignore: Set[str] = set(chain(self.stopwords, self.punctuations))
 
         # Assign min or max length to the attributes
-        self.min_length = min_length
-        self.max_length = max_length
+        self.min_length: int = min_length
+        self.max_length: int = max_length
+
+        # Whether we should include repeated phreases in the computation or not.
+        self.include_repeated_phrases: bool = include_repeated_phrases
 
         # Stuff to be extracted from the provided text.
-        self.frequency_dist = None
-        self.degree = None
-        self.rank_list = None
-        self.ranked_phrases = None
+        self.frequency_dist: Dict[Word, int]
+        self.degree: Dict[Word, int]
+        self.rank_list: List[Tuple[float, Sentence]]
+        self.ranked_phrases: List[Sentence]
 
-    def extract_keywords_from_text(self, text):
+    def extract_keywords_from_text(self, text: str):
         """Method to extract keywords from the text provided.
 
         :param text: Text to extract keywords from, provided as a string.
         """
-        sentences = nltk.tokenize.sent_tokenize(text)
+        sentences: List[Sentence] = nltk.tokenize.sent_tokenize(text)
         self.extract_keywords_from_sentences(sentences)
 
-    def extract_keywords_from_sentences(self, sentences):
+    def extract_keywords_from_sentences(self, sentences: List[Sentence]):
         """Method to extract keywords from the list of sentences provided.
 
         :param sentences: Text to extraxt keywords from, provided as a list
                           of strings, where each string is a sentence.
         """
-        phrase_list = self._generate_phrases(sentences)
+        phrase_list: List[Phrase] = self._generate_phrases(sentences)
         self._build_frequency_dist(phrase_list)
         self._build_word_co_occurance_graph(phrase_list)
         self._build_ranklist(phrase_list)
 
-    def get_ranked_phrases(self):
+    def get_ranked_phrases(self) -> List[Sentence]:
         """Method to fetch ranked keyword strings.
 
         :return: List of strings where each string represents an extracted
@@ -100,7 +131,7 @@ class Rake(object):
         """
         return self.ranked_phrases
 
-    def get_ranked_phrases_with_scores(self):
+    def get_ranked_phrases_with_scores(self) -> List[Tuple[float, Sentence]]:
         """Method to fetch ranked keyword strings along with their scores.
 
         :return: List of tuples where each tuple is formed of an extracted
@@ -108,14 +139,14 @@ class Rake(object):
         """
         return self.rank_list
 
-    def get_word_frequency_distribution(self):
+    def get_word_frequency_distribution(self) -> Dict[Word, int]:
         """Method to fetch the word frequency distribution in the given text.
 
         :return: Dictionary (defaultdict) of the format `word -> frequency`.
         """
         return self.frequency_dist
 
-    def get_word_degrees(self):
+    def get_word_degrees(self) -> Dict[Word, int]:
         """Method to fetch the degree of words in the given text. Degree can be
         defined as sum of co-occurances of the word with other words in the
         given text.
@@ -124,7 +155,7 @@ class Rake(object):
         """
         return self.degree
 
-    def _build_frequency_dist(self, phrase_list):
+    def _build_frequency_dist(self, phrase_list: List[Phrase]) -> None:
         """Builds frequency distribution of the words in the given body of text.
 
         :param phrase_list: List of List of strings where each sublist is a
@@ -132,14 +163,14 @@ class Rake(object):
         """
         self.frequency_dist = Counter(chain.from_iterable(phrase_list))
 
-    def _build_word_co_occurance_graph(self, phrase_list):
+    def _build_word_co_occurance_graph(self, phrase_list: List[Phrase]) -> None:
         """Builds the co-occurance graph of words in the given body of text to
         compute degree of each word.
 
         :param phrase_list: List of List of strings where each sublist is a
                             collection of words which form a contender phrase.
         """
-        co_occurance_graph = defaultdict(lambda: defaultdict(lambda: 0))
+        co_occurance_graph: DefaultDict[Word, DefaultDict[Word, int]] = defaultdict(lambda: defaultdict(lambda: 0))
         for phrase in phrase_list:
             # For each phrase in the phrase list, count co-occurances of the
             # word with other words in the phrase.
@@ -152,11 +183,12 @@ class Rake(object):
         for key in co_occurance_graph:
             self.degree[key] = sum(co_occurance_graph[key].values())
 
-    def _build_ranklist(self, phrase_list):
+    def _build_ranklist(self, phrase_list: List[Phrase]):
         """Method to rank each contender phrase using the formula
 
               phrase_score = sum of scores of words in the phrase.
-              word_score = d(w)/f(w) where d is degree and f is frequency.
+              word_score = d(w) or f(w) or d(w)/f(w) where d is degree
+                           and f is frequency.
 
         :param phrase_list: List of List of strings where each sublist is a
                             collection of words which form a contender phrase.
@@ -175,7 +207,7 @@ class Rake(object):
         self.rank_list.sort(reverse=True)
         self.ranked_phrases = [ph[1] for ph in self.rank_list]
 
-    def _generate_phrases(self, sentences):
+    def _generate_phrases(self, sentences: List[Sentence]) -> List[Phrase]:
         """Method to generate contender phrases given the sentences of the text
         document.
 
@@ -184,14 +216,28 @@ class Rake(object):
         :return: Set of string tuples where each tuple is a collection
                  of words forming a contender phrase.
         """
-        phrase_list = set()
+        phrase_list: List[Phrase] = []
         # Create contender phrases from sentences.
         for sentence in sentences:
-            word_list = [word.lower() for word in wordpunct_tokenize(sentence)]
-            phrase_list.update(self._get_phrase_list_from_words(word_list))
+            word_list: List[Word] = [word.lower() for word in wordpunct_tokenize(sentence)]
+            phrase_list.extend(self._get_phrase_list_from_words(word_list))
+
+        # Based on user's choice to include or not include repeated phrases
+        # we compute the phrase list and return it. If not including repeated
+        # phrases, we only include the first occurance of the phrase and drop
+        # the rest.
+        if not self.include_repeated_phrases:
+            unique_phrase_tracker: Set[Phrase] = set()
+            non_repeated_phrase_list: List[Phrase] = []
+            for phrase in phrase_list:
+                if phrase not in unique_phrase_tracker:
+                    unique_phrase_tracker.add(phrase)
+                    non_repeated_phrase_list.append(phrase)
+            return non_repeated_phrase_list
+
         return phrase_list
 
-    def _get_phrase_list_from_words(self, word_list):
+    def _get_phrase_list_from_words(self, word_list: List[Word]) -> List[Phrase]:
         """Method to create contender phrases from the list of words that form
         a sentence by dropping stopwords and punctuations and grouping the left
         words into phrases. Only phrases in the given length range (both limits
@@ -210,9 +256,9 @@ class Rake(object):
 
         :param word_list: List of words which form a sentence when joined in
                           the same order.
-        :return: List of contender phrases that are formed after dropping
-                 stopwords and punctuations.
+        :return: List of contender phrases honouring phrase length requirements
+                 that are formed after dropping stopwords and punctuations.
         """
         groups = groupby(word_list, lambda x: x not in self.to_ignore)
-        phrases = [tuple(group[1]) for group in groups if group[0]]
+        phrases: List[Phrase] = [tuple(group[1]) for group in groups if group[0]]
         return list(filter(lambda x: self.min_length <= len(x) <= self.max_length, phrases))
