@@ -2,10 +2,8 @@
 
 [![pypiv](https://img.shields.io/pypi/v/rake-nltk.svg)](https://pypi.python.org/pypi/rake-nltk)
 [![pyv](https://img.shields.io/pypi/pyversions/rake-nltk.svg)](https://pypi.python.org/pypi/rake-nltk)
-[![Build Status](https://travis-ci.org/csurfer/rake-nltk.svg?branch=master)](https://travis-ci.org/csurfer/rake-nltk)
-[![Coverage Status](https://coveralls.io/repos/github/csurfer/rake-nltk/badge.svg?branch=master)](https://coveralls.io/github/csurfer/rake-nltk?branch=master)
+[![Build Status](https://github.com/csurfer/rake-nltk/actions/workflows/pytest.yml/badge.svg?branch=master)](https://github.com/csurfer/rake-nltk/actions/workflows/pytest.yml/badge.svg?branch=master)
 [![Licence](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/csurfer/rake-nltk/master/LICENSE)
-[![Thanks](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/csurfer)
 
 RAKE short for Rapid Automatic Keyword Extraction algorithm, is a domain independent keyword extraction algorithm which tries to determine key phrases in a body of text by analyzing the frequency of word appearance and its co-occurance with other words in the text.
 
@@ -75,7 +73,16 @@ Please use [issue tracker](https://github.com/csurfer/rake-nltk/issues) for repo
 
 ### Development
 
-Pull requests are most welcome.
+1. Checkout the repository.
+2. Make your changes and add/update relavent tests.
+3. Install **`poetry`** using **`pip install poetry`**.
+4. Run **`poetry install`** to create project's virtual environment.
+5. Run tests using **`poetry run tox`** (Any python versions which you don't have checked out will fail this). Fix failing tests and repeat.
+6. Make documentation changes that are relavant.
+7. Install **`pre-commit`** using **`pip install pre-commit`** and run **`pre-commit run --all-files`** to do lint checks.
+8. Generate documentation using **`poetry run sphinx-build -b html docs/ docs/_build/html`**.
+9. Generate **`requirements.txt`** for automated testing using **`poetry export --dev --without-hashes -f requirements.txt > requirements.txt`**.
+10. Commit the changes and raise a pull request.
 
 ### Buy the developer a cup of coffee!
 
