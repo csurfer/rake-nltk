@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "rake-nltk"
+version = "1.0.4"
+description = "RAKE short for Rapid Automatic Keyword Extraction algorithm, is a domain independent keyword extraction algorithm which tries to determine key phrases in a body of text by analyzing the frequency of word appearance and its co-occurance with other words in the text."
+authors = ["csurfer <sharma.vishwas88@gmail.com>"]
+license = "MIT"
+readme = "README.rst"
+homepage = "https://csurfer.github.io/rake-nltk"
+repository = "https://github.com/csurfer/rake-nltk"
+keywords = ["nlp", "text-mining", "algorithms", "development"]
+classifiers=[
+    'Intended Audience :: Developers',
+    'Intended Audience :: Education',
+    'License :: OSI Approved :: MIT License',
+    'Development Status :: 3 - Alpha',
+    'Operating System :: POSIX',
+    'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Topic :: Software Development :: Build Tools',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+nltk = "^3.6.2"
+
+[tool.poetry.dev-dependencies]
+Sphinx = "^4.2.0"
+sphinx-autobuild = "^2021.3.14"
+pytest = "^6.2.5"
+tox = "^3.24.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
