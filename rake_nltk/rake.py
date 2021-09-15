@@ -9,10 +9,9 @@ import string
 from collections import Counter, defaultdict
 from enum import Enum
 from itertools import chain, groupby, product
-from typing import DefaultDict, Dict, List, Optional, Set, Tuple
+from typing import Callable, DefaultDict, Dict, List, Optional, Set, Tuple
 
 import nltk
-from nltk.tokenize import wordpunct_tokenize
 
 # Readability type definitions.
 Word = str
@@ -40,6 +39,8 @@ class Rake:
         max_length: int = 100000,
         min_length: int = 1,
         include_repeated_phrases: bool = True,
+        sentence_tokenizer: Optional[Callable[[str], List[str]]] = None,
+        word_tokenizer: Optional[Callable[[str], List[str]]] = None,
     ):
         """Constructor.
 
@@ -66,7 +67,8 @@ class Rake:
                                 (magic, systems), (company,),
                                 (founded,), (raul,)
                             ]
-
+        :param sentence_tokenizer: Tokenizer used to tokenize the text string into sentences.
+        :param word_tokenizer: Tokenizer used to tokenize the sentence string into words.
         """
         # By default use degree to frequency ratio as the metric.
         if isinstance(ranking_metric, Metric):
@@ -98,6 +100,18 @@ class Rake:
         # Whether we should include repeated phreases in the computation or not.
         self.include_repeated_phrases: bool = include_repeated_phrases
 
+        # Tokenizers.
+        self.sentence_tokenizer: Callable[[str], List[str]]
+        if sentence_tokenizer:
+            self.sentence_tokenizer = sentence_tokenizer
+        else:
+            self.sentence_tokenizer = nltk.tokenize.sent_tokenize
+        self.word_tokenizer: Callable[[str], List[str]]
+        if word_tokenizer:
+            self.word_tokenizer = word_tokenizer
+        else:
+            self.word_tokenizer = nltk.tokenize.wordpunct_tokenize
+
         # Stuff to be extracted from the provided text.
         self.frequency_dist: Dict[Word, int]
         self.degree: Dict[Word, int]
@@ -109,7 +123,7 @@ class Rake:
 
         :param text: Text to extract keywords from, provided as a string.
         """
-        sentences: List[Sentence] = nltk.tokenize.sent_tokenize(text)
+        sentences: List[Sentence] = self._tokenize_text_to_sentences(text)
         self.extract_keywords_from_sentences(sentences)
 
     def extract_keywords_from_sentences(self, sentences: List[Sentence]):
@@ -154,6 +168,26 @@ class Rake:
         :return: Dictionary (defaultdict) of the format `word -> degree`.
         """
         return self.degree
+
+    def _tokenize_text_to_sentences(self, text: str) -> List[Sentence]:
+        """Tokenizes the given text string into sentences using the configured
+        sentence tokenizer. Configuration uses `nltk.tokenize.sent_tokenize`
+        by default.
+
+        :param text: String text to tokenize into sentences.
+        :return: List of sentences as per the tokenizer used.
+        """
+        return self.sentence_tokenizer(text)
+
+    def _tokenize_sentence_to_words(self, sentence: Sentence) -> List[Word]:
+        """Tokenizes the given sentence string into words using the configured
+        word tokenizer. Configuration uses `nltk.tokenize.wordpunct_tokenize`
+        by default.
+
+        :param sentence: String sentence to tokenize into words.
+        :return: List of words as per the tokenizer used.
+        """
+        return self.word_tokenizer(sentence)
 
     def _build_frequency_dist(self, phrase_list: List[Phrase]) -> None:
         """Builds frequency distribution of the words in the given body of text.
@@ -219,7 +253,7 @@ class Rake:
         phrase_list: List[Phrase] = []
         # Create contender phrases from sentences.
         for sentence in sentences:
-            word_list: List[Word] = [word.lower() for word in wordpunct_tokenize(sentence)]
+            word_list: List[Word] = [word.lower() for word in self._tokenize_sentence_to_words(sentence)]
             phrase_list.extend(self._get_phrase_list_from_words(word_list))
 
         # Based on user's choice to include or not include repeated phrases

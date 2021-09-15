@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>rake_nltk.rake &#8212; rake-nltk 1.0.5 documentation</title>
+    <title>rake_nltk.rake &#8212; rake-nltk 1.0.6 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
@@ -78,10 +78,9 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span><span class="p">,</span> <span class="n">defaultdict</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span><span class="p">,</span> <span class="n">groupby</span><span class="p">,</span> <span class="n">product</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">DefaultDict</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">DefaultDict</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span> <span class="nn">nltk</span>
-<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">wordpunct_tokenize</span>
 
 <span class="c1"># Readability type definitions.</span>
 <span class="n">Word</span> <span class="o">=</span> <span class="nb">str</span>
@@ -109,6 +108,8 @@
         <span class="n">max_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">,</span>
         <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
         <span class="n">include_repeated_phrases</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">sentence_tokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">word_tokenizer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Constructor.</span>
 
@@ -135,7 +136,8 @@
 <span class="sd">                                (magic, systems), (company,),</span>
 <span class="sd">                                (founded,), (raul,)</span>
 <span class="sd">                            ]</span>
-
+<span class="sd">        :param sentence_tokenizer: Tokenizer used to tokenize the text string into sentences.</span>
+<span class="sd">        :param word_tokenizer: Tokenizer used to tokenize the sentence string into words.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># By default use degree to frequency ratio as the metric.</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ranking_metric</span><span class="p">,</span> <span class="n">Metric</span><span class="p">):</span>
@@ -167,6 +169,18 @@
         <span class="c1"># Whether we should include repeated phreases in the computation or not.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">include_repeated_phrases</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">include_repeated_phrases</span>
 
+        <span class="c1"># Tokenizers.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sentence_tokenizer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="n">sentence_tokenizer</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sentence_tokenizer</span> <span class="o">=</span> <span class="n">sentence_tokenizer</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sentence_tokenizer</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">tokenize</span><span class="o">.</span><span class="n">sent_tokenize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word_tokenizer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="n">word_tokenizer</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">word_tokenizer</span> <span class="o">=</span> <span class="n">word_tokenizer</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">word_tokenizer</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">tokenize</span><span class="o">.</span><span class="n">wordpunct_tokenize</span>
+
         <span class="c1"># Stuff to be extracted from the provided text.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frequency_dist</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Word</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">degree</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Word</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
@@ -178,7 +192,7 @@
 
 <span class="sd">        :param text: Text to extract keywords from, provided as a string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">sentences</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Sentence</span><span class="p">]</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">tokenize</span><span class="o">.</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">sentences</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Sentence</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tokenize_text_to_sentences</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">extract_keywords_from_sentences</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Rake.extract_keywords_from_sentences"><a class="viewcode-back" href="../../api.html#rake_nltk.Rake.extract_keywords_from_sentences">[docs]</a>    <span class="k">def</span> <span class="nf">extract_keywords_from_sentences</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentences</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Sentence</span><span class="p">]):</span>
@@ -223,6 +237,26 @@
 <span class="sd">        :return: Dictionary (defaultdict) of the format `word -&gt; degree`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">degree</span></div>
+
+    <span class="k">def</span> <span class="nf">_tokenize_text_to_sentences</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Sentence</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Tokenizes the given text string into sentences using the configured</span>
+<span class="sd">        sentence tokenizer. Configuration uses `nltk.tokenize.sent_tokenize`</span>
+<span class="sd">        by default.</span>
+
+<span class="sd">        :param text: String text to tokenize into sentences.</span>
+<span class="sd">        :return: List of sentences as per the tokenizer used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sentence_tokenizer</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_tokenize_sentence_to_words</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sentence</span><span class="p">:</span> <span class="n">Sentence</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Word</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Tokenizes the given sentence string into words using the configured</span>
+<span class="sd">        word tokenizer. Configuration uses `nltk.tokenize.wordpunct_tokenize`</span>
+<span class="sd">        by default.</span>
+
+<span class="sd">        :param sentence: String sentence to tokenize into words.</span>
+<span class="sd">        :return: List of words as per the tokenizer used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_tokenizer</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_build_frequency_dist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Phrase</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Builds frequency distribution of the words in the given body of text.</span>
@@ -288,7 +322,7 @@
         <span class="n">phrase_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Phrase</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># Create contender phrases from sentences.</span>
         <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
-            <span class="n">word_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Word</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">wordpunct_tokenize</span><span class="p">(</span><span class="n">sentence</span><span class="p">)]</span>
+            <span class="n">word_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Word</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tokenize_sentence_to_words</span><span class="p">(</span><span class="n">sentence</span><span class="p">)]</span>
             <span class="n">phrase_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_phrase_list_from_words</span><span class="p">(</span><span class="n">word_list</span><span class="p">))</span>
 
         <span class="c1"># Based on user&#39;s choice to include or not include repeated phrases</span>

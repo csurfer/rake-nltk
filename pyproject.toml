@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "rake-nltk"
-version = "1.0.5"
+version = "1.0.6"
 description = "RAKE short for Rapid Automatic Keyword Extraction algorithm, is a domain independent keyword extraction algorithm which tries to determine key phrases in a body of text by analyzing the frequency of word appearance and its co-occurance with other words in the text."
 authors = ["csurfer <sharma.vishwas88@gmail.com>"]
 license = "MIT"
