@@ -4,6 +4,8 @@
 
 from collections import defaultdict
 
+import nltk
+
 from rake_nltk import Metric, Rake
 
 ###########################################################
@@ -330,3 +332,86 @@ def test_allow_repeated_phrases():
 
     r = Rake(include_repeated_phrases=False)
     assert r._generate_phrases(sentences) == expected_phrase_list_without_repetitions
+
+
+def test_sent_tokenizer_config():
+    text = 'This is a sentence with a #sent hashtag. This is another sentence with a a@rake.com email address.'
+
+    punct_tokenized_sentences = [
+        'This is a sentence with a #sent hashtag.',
+        'This is another sentence with a a@rake.com email address.',
+    ]
+
+    # Default.
+    r = Rake()
+    assert punct_tokenized_sentences == r._tokenize_text_to_sentences(text)
+
+    # Punct tokenize.
+    r = Rake(sentence_tokenizer=nltk.tokenize.sent_tokenize)
+    assert punct_tokenized_sentences == r._tokenize_text_to_sentences(text)
+
+    # Custom tokenizer.
+    def custom_tokenizer(text):
+        return text.split('with')
+
+    r = Rake(sentence_tokenizer=custom_tokenizer)
+    assert [
+        'This is a sentence ',
+        ' a #sent hashtag. This is another sentence ',
+        ' a a@rake.com email address.',
+    ] == r._tokenize_text_to_sentences(text)
+
+
+def test_word_tokenizer_config():
+    sentence = 'This is a cooool #dummysmiley: :-) :-P <3 and some arrows < > -> <--'
+
+    punct_tokenized_words = [
+        'This',
+        'is',
+        'a',
+        'cooool',
+        '#',
+        'dummysmiley',
+        ':',
+        ':-)',
+        ':-',
+        'P',
+        '<',
+        '3',
+        'and',
+        'some',
+        'arrows',
+        '<',
+        '>',
+        '->',
+        '<--',
+    ]
+
+    # Default
+    r = Rake()
+    assert punct_tokenized_words == r._tokenize_sentence_to_words(sentence)
+
+    # Punct tokenize.
+    r = Rake(word_tokenizer=nltk.tokenize.wordpunct_tokenize)
+    assert punct_tokenized_words == r._tokenize_sentence_to_words(sentence)
+
+    # Custom tokenizer. (Tweet)
+    r = Rake(word_tokenizer=nltk.tokenize.TweetTokenizer().tokenize)
+    assert [
+        'This',
+        'is',
+        'a',
+        'cooool',
+        '#dummysmiley',
+        ':',
+        ':-)',
+        ':-P',
+        '<3',
+        'and',
+        'some',
+        'arrows',
+        '<',
+        '>',
+        '->',
+        '<--',
+    ] == r._tokenize_sentence_to_words(sentence)

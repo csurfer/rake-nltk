@@ -10,6 +10,12 @@ RAKE short for Rapid Automatic Keyword Extraction algorithm, is a domain indepen
 
 ![Demo](http://i.imgur.com/wVOzU7y.gif)
 
+## Features
+
+* Ridiculously simple interface.
+* Configurable word and sentence tokenizers, language based stop words etc
+* Configurable ranking metric.
+
 ## Setup
 
 ### Using pip

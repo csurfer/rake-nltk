@@ -1,6 +1,10 @@
 Release History
 ===============
 
+v1.0.6
+------
+* Allowing usage of custom word and sentence tokenizers.
+
 v1.0.5
 ------
 * Adding python typing for better/clear interfaces.

@@ -10,6 +10,13 @@ and its co-occurance with other words in the text.
 
 |Demo|
 
+Features
+--------
+
+* Ridiculously simple interface.
+* Configurable word and sentence tokenizers, language based stop words etc
+* Configurable ranking metric.
+
 Setup
 -----
 

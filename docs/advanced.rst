@@ -89,3 +89,37 @@ was founded in a garage" has the phrase (magic, systems) occuring twice.
 
     # To include all phrases only once and ignore the repetitions
     r = Rake(include_repeated_phrases=False)
+
+to control the sentence tokenizer
+---------------------------------
+
+So that user can choose the sentence tokenizer they want to use.
+
+.. code:: python
+
+    from rake_nltk import Rake
+    
+    # To use default `nltk.tokenize.sent_tokenize` tokenizer.
+    r = Rake() # Equivalent to Rake(sentence_tokenizer=nltk.tokenize.sent_tokenize)
+
+    # To use a custom tokenizer.
+    def custom_tokenizer(text: str) -> List[str]:
+        ...
+    r = Rake(sentence_tokenizer=custom_tokenizer)
+
+to control the word tokenizer
+---------------------------------
+
+So that user can choose the word tokenizer they want to use.
+
+.. code:: python
+
+    from rake_nltk import Rake
+    
+    # To use default `nltk.tokenize.wordpunct_tokenize` tokenizer.
+    r = Rake() # Equivalent to Rake(word_tokenizer=nltk.tokenize.wordpunct_tokenize)
+
+    # To use a custom tokenizer.
+    def custom_tokenizer(text: str) -> List[str]:
+        ...
+    r = Rake(word_tokenizer=custom_tokenizer)
