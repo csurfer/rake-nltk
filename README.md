@@ -5,6 +5,7 @@
 [![Build Status](https://github.com/csurfer/rake-nltk/actions/workflows/pytest.yml/badge.svg?branch=master)](https://github.com/csurfer/rake-nltk/actions)
 [![codecov](https://codecov.io/gh/csurfer/rake-nltk/branch/master/graph/badge.svg?token=ghRhWVec9X)](https://codecov.io/gh/csurfer/rake-nltk)
 [![Licence](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/csurfer/rake-nltk/master/LICENSE)
+[![Downloads](https://pepy.tech/badge/rake-nltk)](https://pepy.tech/project/rake-nltk)
 
 RAKE short for Rapid Automatic Keyword Extraction algorithm, is a domain independent keyword extraction algorithm which tries to determine key phrases in a body of text by analyzing the frequency of word appearance and its co-occurance with other words in the text.
 
