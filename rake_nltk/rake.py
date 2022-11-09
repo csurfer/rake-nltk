@@ -8,6 +8,7 @@ documents` by Stuart Rose, Dave Engel, Nick Cramer and Wendy Cowley.
 import string
 from collections import Counter, defaultdict
 from enum import Enum
+from functools import partial
 from itertools import chain, groupby, product
 from typing import Callable, DefaultDict, Dict, List, Optional, Set, Tuple
 
@@ -105,7 +106,7 @@ class Rake:
         if sentence_tokenizer:
             self.sentence_tokenizer = sentence_tokenizer
         else:
-            self.sentence_tokenizer = nltk.tokenize.sent_tokenize
+            self.sentence_tokenizer = partial(nltk.tokenize.sent_tokenize, language=language)
         self.word_tokenizer: Callable[[str], List[str]]
         if word_tokenizer:
             self.word_tokenizer = word_tokenizer
